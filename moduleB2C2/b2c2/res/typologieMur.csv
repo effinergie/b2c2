@@ -1,0 +1,15 @@
+-idTypo,typoBat,-strucMur,-nonUtilise,-typeIsoMur,-resistMur,-etape,-part,-idSol,-numSol_nonUtilise
+1,maisRuralAv1948,piere,Enduit mortier,non,rInf1,1,100,17,1
+2,maisBourgAv1948,brique,Enduit mortier,non,rInf1,1,100,21,1
+3,pavBanlAv1948,brique,Enduit mortier,non,rInf1,1,100,22,1
+4,pavBanlRecons1948_1974,briqueCreux,Enduit mortier,non,rInf1,1,100,13,2
+5,pav1968_1974,betonCreux,Enduit mortier,non,rInf1,1,100,13,2
+6,pav1975_1985,betonCreux,Enduit mortier,iti,rInf1,1,100,9,2
+7,haussmanAv1948,piere,Brique,non,rInf1,2,100,17,1
+8,immDeBougAv1948,brique,Brique,non,rInf1,1,100,21,1
+9,immBougeoisAv1948,piere,Chaux,non,rInf1,2,100,17,1
+10,petitColl1948_1974,beton,Enduit mortier,non,rInf1,1,100,7,2
+11,barres1948_1974,beton,Enduit mortier,non,rInf1,1,100,7,2
+12,barres1975_1981,beton,Enduit mortier,iti,rSup1,1,100,3,2
+13,echopeBordPleinPiedAv1948,piere,Aucune,non,rInf1,1,100,17,1
+14,echopeBordRP1_1948,piere,Aucune,non,rInf1,1,100,17,1

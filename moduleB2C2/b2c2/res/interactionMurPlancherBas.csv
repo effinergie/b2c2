@@ -1,0 +1,4 @@
+-idInter,lotEtape,resTypeIsoMur,typePlancherBas,-risque,-solution
+1,plancherBas,ite,*,Pont thermique,Prévoir une descente de l'isolation du plancher sur 40 cm
+2,"plancherBas,mur",ite,exterieur,Pont thermique,Prévoir la continuité de l'isolation entre la sous face et l'isolation par l'extérieur
+3,"plancherBas,mur",iti,*,Etanchéité à l'air,Prévoir la continuité du traitement d'étanchéité à l'air (membrane ou autre) entre l'isolation par l'intérieur du mur et le plancher bas ; réaliser une découpe du plancher ou retour membranes sur les deux faces du plancher (au moins la face supérieure)

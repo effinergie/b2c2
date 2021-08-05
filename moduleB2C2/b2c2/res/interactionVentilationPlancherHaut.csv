@@ -1,0 +1,3 @@
+-idInter,lotEtape,resTypeVentilation,contactPlancherHaut,-risque,-solution
+1,plancherHaut,"gazAuto,gazHygroA,gazHygroB,hygroA,auto,doubleFlux,hygroB,bassePression,naturelleAssit",comblePerdu,Problème d'accès,Prévoir dans les combles un cheminement technique pour l'accès au caisson de ventilation ou équipement technique
+1,"plancherHaut,ventilation","gazAuto,gazHygroA,gazHygroB,hygroA,auto,doubleFlux,hygroB,bassePression,naturelleAssit","comblePerdu,rampant",Etanchéité à l'air,Anticiper les passages de réseaux et prévoir des dispositifs adaptés de traitement d'étanchéité à l'air

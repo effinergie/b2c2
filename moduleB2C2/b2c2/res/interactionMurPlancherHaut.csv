@@ -1,0 +1,8 @@
+-idInter,lotEtape,resTypeIsoMur,contactPlancherHaut,resTypeIsoPlancherHaut,-risque,-solution
+1,"mur,plancherHaut",ite,"rampant,comblePerdu",*,Pont thermique,"Assurer la continuité de l'isolation entre l'isolation par l'extérieur et l'isolation des rampants, au niveau de la tête de mur. Bien prévoir l'isolation par l'extérieur jusqu'en haut du mur"
+2,"mur,plancherHaut",ite,"rampant,comblePerdu",*,Pont thermique,"Assurer la continuité de l'isolation entre l'isolation par l'extérieur et l'isolation des rampants, au niveau de la tête de mur. Prolonger l'isolation par l'extérieur jusqu'en haut du mur et dépose de cache moineaux"
+3,"mur,plancherHaut",ite,rampant,sarking,Pont thermique,Assurer la continuité de l'isolation entre l'isolation par l'extérieur et l'isolation des rampants par l'extérieur. 
+4,"mur,plancherHaut",ite,toitTerrase,*,Pont thermique,Prévoir un recouvrement des acrotères avec une résistance thermique minimale de 2 m².K/W. Isoler sur les 3 faces si l'acrotère fait moins de 60 cm
+5,"mur,plancherHaut",iti,*,*,Etanchéité à l'air,Prévoir la continuité du traitement de l'étanchéité à l'air (membrane ou autre) et de l'isolation entre l'isolation par l'intérieur du mur et l'isolation du plancher haut ; réaliser une découpe du plancher ou retour membranes sur les deux faces du plancher
+6,"mur,plancherHaut",ite,"rampant,comblePerdu",*,Etanchéité à l'air,Prévoir la continuité du traitement de l'étanchéité à l'air (membrane ou autre) entre l'isolation par l'extérieur du mur et l'isolation du plancher haut ; effectuer un retour membrane du plancher haut
+7,"mur,plancherHaut",iti,rampant,sarking,Pont thermique,Assurer la continuité de l'isolation en montant l'isolation par l'intérieur jusqu'en sous face du bas de pente

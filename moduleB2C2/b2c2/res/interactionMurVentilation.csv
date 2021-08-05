@@ -1,0 +1,4 @@
+-idInter,lotEtape,resTypeIsoMur,resTypeVentilation,-risque,-solution
+1,mur,"ite,iti",*,Défaut de renouvellement d'air et circulation aéraulique,"Dans le cas de mise en œuvre de dispositifs d'entrée d'air acoustiques, mettre en œuvre ceux-ci au préalable de la réalisation de l'isolation et le traitement de l'étanchéité à l'air"
+2,"mur,ventilation",*,doubleFlux,Diminution de l'efficacité du système,Assurer une étanchéité à l'air complète pour éviter les entrées d'air parasites et la diminution de l'efficacité de l'échangeur
+3,"mur,ventilation",*,"gazAuto,gazHygroA,gazHygroB,hygroA,auto,hygroB,bassePression,repartie,naturelleAssit",Mauvais balayage et circulation aéraulique,Assurer une étanchéité à l'air complète pour éviter les entrées d'air parasites qui perturbe le balayage et le renouvellement d'air général

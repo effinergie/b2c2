@@ -1,0 +1,4 @@
+-idInter,lotEtape,resTypeIsoMur,resTypeProd,-risque,-solution
+1,"mur,chauffage",iti,*,Pont thermique intégré,"Si réseaux existants, prévoir un dévoiement de ceux-ci pour ne pas réduire l'épaisseur de l'isolation à ces endroits"
+2,"mur,chauffage",*,"pacAirEau,pacAirEauEcsEnr,appareilIndepBois,chaudiereGazCondensationNs90",Etanchéité à l'air,"Assurer l'étanchéité à l'air au niveau des pénétrations de réseaux (conduits concentriques, à liaison frigorifique) avec des dispositifs adaptés (œillet, ruban adhésif, mastic, …)"
+4,"mur,chauffage",iti,appareilIndepBois,Sécurité incendie,Prévoir un parement et un isolant qui répondent aux exigences de la sécurité incendie

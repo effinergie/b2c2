@@ -1,0 +1,2 @@
+-idInter,lotEtape,lotTraite,resTypeVentilation,typeProdChauffage,-risque,-solution
+1,ventilation,!chauffage,"GazAuto,gazHygroA,gazHygroB,auto,hygroA,hygroB,bassePression,repartie,doubleFlux","insertOuvert,insertFerme",Défaut de fonctionnement / risque sanitaire mortel (refoulement de gaz),Prévoir une entrée d'air dédiée ou changement du système de production

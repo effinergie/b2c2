@@ -1,0 +1,13 @@
+-idTypo,typeBat,anneeConstr,choixEner,-chauffageCollectif,-nonUtileChauffageCollectifOuIndividuel,-typeProdChauffage,-typeEmmeteurChauffage,-part,-idSol,-nonUtileNumSol,-etape
+1,MI,"av1948,ap1949,ap1975,ap1982",elec,non,,radiateurElec,radiateurElec,100,51,1,2
+1,LC,"av1948,ap1949,ap1975,ap1982",elec,non,,radiateurElec,radiateurElec,100,22,1,2
+2,MI,"av1948,ap1949,ap1975,ap1982",gazIndiv,non,Chauffage individuel,chaudiereGazBT,radiateurHT,100,38,si_MI_3_sinon_5,2
+2,LC,"av1948,ap1949,ap1975,ap1982",gazIndiv,non,Chauffage individuel,chaudiereGazBT,radiateurHT,100,5,si_MI_3_sinon_5,2
+3,MI,"av1948,ap1949,ap1975,ap1982",gazColl,oui,Chauffage collectif (réseaux non isolés),chaudiereGazBT,radiateurHT,100,40,5,2
+3,LC,"av1948,ap1949,ap1975,ap1982",gazColl,oui,Chauffage collectif (réseaux non isolés),chaudiereGazBT,radiateurHT,100,5,5,2
+4,MI,"av1948,ap1949,ap1975,ap1982",fioulIndiv,non,Chauffage individuel,chaudiereGazBT,radiateurHT,100,42,si_MI_7_sinon_5,2
+4,LC,"av1948,ap1949,ap1975,ap1982",fioulIndiv,non,Chauffage individuel,chaudiereGazBT,radiateurHT,100,5,si_MI_7_sinon_5,2
+5,MI,"av1948,ap1949,ap1975,ap1982",fioulColl,oui,Chauffage collectif (réseaux non isolés),chaudiereGazBT,radiateurHT,100,39,4,2
+5,LC,"av1948,ap1949,ap1975,ap1982",fioulColl,oui,Chauffage collectif (réseaux non isolés),chaudiereGazBT,radiateurHT,100,4,4,2
+6,MI,"av1948,ap1949,ap1975,ap1982",urbain,non,#NOM ?,reseauChaleur,radiateurHT,100,36,1,2
+6,LC,"av1948,ap1949,ap1975,ap1982",urbain,oui,#NOM ?,reseauChaleur,radiateurHT,100,1,1,2

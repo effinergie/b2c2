@@ -1,0 +1,643 @@
+
+
+/************************
+* acordéons
+*************************/
+.lotContent .titreTiroir{
+	position : relative;
+	padding:13px 30px;
+	
+	/*
+    border-radius: 10px;	
+	border: 1px solid #AAA;*/
+
+	color:#000;
+	font-weight:bold;
+	font-size:16px;
+	margin : 10px 0;
+}
+
+.lotContent .titreTiroir{
+	/*background: rgba(249 169 71);
+	background: linear-gradient(0deg, rgba(249 169 71) 0%, rgba(251 197 129) 100%);	*/
+	background-color:#9cc8e2;
+}
+
+
+.lotContent#lotGeneral .titreTiroir{
+	/*background: rgb(68,64,126);
+	background: linear-gradient(0deg, rgba(68,64,126,1) 0%, rgba(0,212,255,1) 100%);*/
+}
+
+.lotContent#lotBatiment .titreTiroir{
+	/*background: rgb(3,125,63);
+	background: linear-gradient(0deg, rgb(3 125 63) 0%, rgb(41 249 66) 100%);*/
+}
+
+.lotContent#lotMur .titreTiroir,
+.lotContent#lotPlancherHaut .titreTiroir,
+.lotContent#lotPlancherBas .titreTiroir,
+.lotContent#lotMenuiserie .titreTiroir{
+	background-color:#5f9fc5;
+}
+
+.lotContent#lotEcs .titreTiroir,
+.lotContent#lotChauffage .titreTiroir,
+.lotContent#lotVentilation .titreTiroir{
+	background-color:#1874ab;
+}
+
+.lotContent#feuilleDeRoute .titreTiroir{
+	/*background: rgba(249 169 71);
+	background: linear-gradient(0deg, rgba(35 35 35) 0%, rgba(214,214,214) 100%);*/
+	background-color:#333;
+	color:#eee;
+}
+
+
+
+.lotContent .titreTiroir:before{
+	position : absolute;
+	right : 20px;
+	top:7px;
+	/*background: rgb(57,57,57);
+	background: linear-gradient(180deg, rgba(57,57,57,1) 0%, rgba(179,224,233,1) 100%);
+	border-radius: 20px;*/
+	padding: 5px;
+	/*width:17px;
+	height:17px;*/
+	overflow : hidden;
+	/*border: 1px solid #555;*/
+	text-align:center;
+	/*font-size:18px;
+	color : #333;*/
+	/*transform: rotate(0deg);
+	transition: all 0.5s ease;
+	content:"▲";*/
+	font-size:25px;
+	content:"+";
+	z-index:1;
+	position:absolute;
+	width: 20px;
+}
+
+.lotContent.opened .titreTiroir:before{
+	/*transform: rotate(-180deg);*/
+	content:"-";
+}
+
+.tiroirContent{
+    padding: 10px 30px;
+}
+
+.tiroirContent .intro{
+	margin-bottom:20px;
+	font-weight:bold;
+	color:#e28344;
+	
+}
+
+/* tirroir Feuille de route */
+.titreFdr{
+	position:relative;
+}
+
+.titreFdr:before{
+	position : absolute;
+	right : 5px;
+	top:5px;
+	border-radius: 20px;
+	padding: 5px;
+	width:17px;
+	height:17px;
+	overflow : hidden;	
+	text-align:center;
+	font-size:22px;
+	color : #333;
+	content:"\276F";
+	z-index:10;
+	position:absolute;
+	transform: rotate(0deg);
+	transition: all 0.5s ease;
+}
+
+.opened.titreFdr:before{
+	transform: rotate(90deg);	
+}
+
+/************************
+* Saisie
+*************************/
+
+
+.lotContent  .blocCadre {
+	/*border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;*/
+	margin-bottom:20px;
+	/*background-color:#eee;*/
+}
+
+.saisieContent .typeLot .ligneSaisie{
+	display: flex;
+    flex-wrap: wrap;
+}
+
+.saisieContent .champLot{
+	display:flex;	
+}
+
+.saisieContent .champLot .lib{
+	padding: 5px;
+	display:none;
+}
+
+.saisieContent .champLot .unite{
+	padding: 5px;
+}
+
+.saisieContent .typeLot .ligneSaisie .champLot.designLot{
+	flex-basis:100%;
+}
+.saisieContent .typeLot .ligneSaisie .champLot.designLot input{
+	width:100%;
+	max-width:none;
+	font-weight:bold;
+}
+
+.saisieContent .champLot select,
+.saisieContent .champLot input{
+	max-width:200px;
+	box-sizing: border-box;
+    height: 28px;
+}
+
+.saisieContent .champLot .freetext{
+	padding: 5px;
+	margin-bottom:10px;
+}
+
+
+
+.saisieContent .solutionListe {
+    margin-bottom: 10px;
+}
+
+.saisieContent .solutionListe .titreSolution {
+    margin-bottom: 10px;
+	/*color: #e28344;
+	font-weight:bold;*/
+}
+
+.saisieContent .tableSol{
+	margin-bottom:10px;
+}
+
+.saisieContent .solLigne{
+	display:table-row;
+}
+
+.saisieContent .solLigne:nth-child(even){
+	background-color:#eee;
+}
+
+.saisieContent .solLigne .champSol{
+	display:table-cell;
+	border:1px solid #ccc;
+	padding: 5px
+}
+
+.saisieContent .solLigne.entete{
+	background-color:#BBB;
+}
+
+.saisieContent .remarqueSolution{
+	color:red;
+	font-weight:bold;
+}
+
+
+.saisieContent .champLot.surfMenuiserie input,
+.saisieContent .champLot.part input{
+	max-width: 60px;
+}
+.saisieContent .champLot.part .lib{
+	display:inherit;
+}
+
+.saisieContent .champLot.etape select{
+	max-width: 160px;
+}
+
+
+
+.addType{
+	/*float:right;*/
+	display: flex;
+    color: #999;
+    font-style: italic;
+	margin-bottom:10px;
+}
+
+.grpBouton{
+	text-align:right;
+}
+
+
+
+.addType .lib{
+	margin-left: 10px;
+	align-items: center;
+    display: inherit;
+}
+
+/*forme bâtiment*/
+
+#lotBatiment .champLot.imgForme img {
+	height: 40px;
+	width:auto;
+}
+
+#lotBatiment .champLot.imgForme .imgContent {
+	margin-left:210px;
+	display:block;
+}
+
+.aRemplir textarea,
+.aRemplir input,
+.aRemplir select{
+    box-shadow: 0 0 10px red;
+}
+
+#lotBatiment .champLot .ckbValDef{
+	display:inline-flex;
+	margin-left:10px;
+}
+
+#lotBatiment .champLot .ckbValDef input{
+	height:auto;
+	margin: 2px 5px;
+}
+
+
+#lotBatiment .champLot.altitude .ckbValDef,
+#lotBatiment .champLot.permeaInit .ckbValDef,
+#lotBatiment .champLot.permeaFin .ckbValDef{
+	margin-left:35px;
+}
+
+/*Descriptif*/
+.tiroirContent textarea{
+	width:400px;
+}
+/************************
+* Onglet Général
+*************************/
+.lotGen .blocCadre{
+	width:100%;
+}
+
+.lotGen .ligneSaisie{
+	display:block;
+}
+
+
+
+
+.lotGen .saisieContent .champLot .lib{
+	width:200px;	
+	display:block;
+}
+
+
+.lotGen .saisieContent .champLot.nomProjet input{
+	max-width:none;	
+	/*flex-grow:1;*/
+}
+
+.grpImgTypo{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-between;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    max-width: 500px;
+	margin-bottom:20px;
+}
+
+
+
+.lotGen .saisieContent .champLot.imgTypo .imgContent img{
+	object-fit: contain;
+	width:100px;
+	height:100px;
+	margin:10px;
+}
+
+
+
+
+
+/* input number -> remove spin */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/************************
+* Feuille de route
+*************************/
+#feuilleDeRoute .contenuFeuille .divTabPdf{
+	display:block;
+}
+
+#feuilleDeRoute .contenuFeuille .tabFdr {
+	margin-bottom:40px;
+	width:100%;
+}
+
+#feuilleDeRoute .contenuFeuille .tabFdr .lgn{
+	/*display:table-row;*/
+}
+
+
+
+#feuilleDeRoute .contenuFeuille .tabFdr .col{
+	/*display:table-cell;*/
+	border:1px solid #ccc;
+	padding:5px;
+	vertical-align:top;
+}
+
+#feuilleDeRoute .contenuFeuille .tabFdr .col.nomLot{
+	vertical-align:middle;
+}
+
+#feuilleDeRoute .contenuFeuille .tabFdr .col.recom,
+#feuilleDeRoute .contenuFeuille .tabFdr .col.perfMin,
+#feuilleDeRoute .contenuFeuille .tabFdr .col.descTrav{
+	background-color:#ddd;
+}
+
+#feuilleDeRoute .contenuFeuille .tabFdr .col.perfMin{
+	color : #232390;
+}
+
+#feuilleDeRoute .contenuFeuille .tabFdr .entete .col.perfMin{
+	color : inherit;
+}
+
+#feuilleDeRoute .contenuFeuille .tabFdr .col.existant,
+#feuilleDeRoute .contenuFeuille .tabFdr .col.recom,
+#feuilleDeRoute .contenuFeuille .tabFdr .col.descTrav{
+	width:29%;
+}
+#feuilleDeRoute .contenuFeuille .tabFdr .col.nomLot{
+	width:6%;
+}
+
+#feuilleDeRoute .contenuFeuille .tabFdr .col.titreTab{
+	background-color:#BBB;
+	vertical-align:middle;
+	-webkit-print-color-adjust: exact;
+	print-color-adjust: exact;
+	color-adjust: exact;
+}
+
+#feuilleDeRoute .contenuFeuille .titreFdr{
+	border: 1px solid #ccc;
+    background-color: #a97b50;
+    font-weight: bold;    
+    padding: 10px;
+    margin-bottom: 10px;
+	display:flex;
+	justify-content:center;
+}
+
+#feuilleDeRoute .contenuFeuille .champFdr{
+	/*display: flex;*/
+	width:100%;
+}
+
+#feuilleDeRoute .contenuFeuille .champFdr .lib{
+	width:50%;
+}
+/*
+#feuilleDeRoute .contenuFeuille .champFdr .val{
+	text-align:right;
+}*/
+
+#feuilleDeRoute .contenuFeuille .champFdr.description {
+    display : block
+}
+#feuilleDeRoute .contenuFeuille .champFdr.description .lib{
+	margin-bottom:5px;
+}
+#feuilleDeRoute .contenuFeuille .champFdr.description .val{
+	text-align : justify;
+}
+
+
+
+/*conformite*/
+#feuilleDeRoute .contenuFeuille .imgMPR,
+#feuilleDeRoute .contenuFeuille .imgConformite{
+    height: 32px;
+    margin-right: 20px;
+	float:left;
+}
+
+#feuilleDeRoute .contenuFeuille .imgMPR{
+	height: 20px;
+}
+
+
+#feuilleDeRoute .contenuFeuille .tabFdr.conformite{
+	margin-bottom: 0;
+}
+ 
+/* Tableau d'évolution des consomations*/
+#feuilleDeRoute .tabConso .col{
+	vertical-align:middle !important;
+}
+
+#feuilleDeRoute .tabConso .col .contDpe{
+	/*display: flex;
+	justify-content: space-around;*/
+	width: 100%;
+    text-align: center;
+}
+
+#feuilleDeRoute .tabConso .col .contDpe .imgDpe{
+	/*max-width: 300px;*/
+	max-height: 220px;
+}
+
+
+#feuilleDeRoute .tabConso .col .contDpe .graphLegend {
+    font-size: 12px;
+    font-style: italic;
+}
+
+#feuilleDeRoute .tabConso .colFleche{
+	min-width : 90px;
+}
+
+#feuilleDeRoute .tabConso .fleche{
+	position:relative;
+	z-index:0;	
+    text-align: center;
+	margin: 20px 0px;
+	font-weight: bold;
+	color : #fff;
+	transform: rotate(90deg);
+}
+
+#feuilleDeRoute .tabConso .fleche:before{
+	content: "\01F82E";
+    font-size: 120px;
+    position: absolute;
+    color: #ed6035;
+	z-index:-1;
+	margin-left: -20px;
+	top:2px;	
+}
+
+
+/************************
+* Interactions
+*************************/
+
+#feuilleDeRoute .contenuFeuille .titreTab{
+	text-align :center;
+}
+
+#feuilleDeRoute .contenuFeuille .tabInter .lots,
+#feuilleDeRoute .contenuFeuille .tabInter .risques{
+	width:130px;
+}
+
+#feuilleDeRoute .contenuFeuille .tabInter .lots{
+	vertical-align:middle;
+}
+
+/************************
+* Liste des projets
+*************************/
+.menuProjetsB2C2 a{
+	border: 1px solid #ccc;
+	padding:5px;
+	background-color:#DDD;
+	border-radius:5px;
+	margin:5px;
+}
+
+.menuProjetsB2C2{
+	margin : auto;
+	margin-bottom:20px;
+	text-align: center;
+}
+.listeProjet{
+	margin: auto;
+    width: fit-content;
+}
+
+.listeProjet .entete{
+	background-color:#CCC;	
+}
+
+.listeProjet .lgn{
+	display: table-row;	
+}
+
+.listeProjet .col{
+	display: table-cell;
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+
+
+.listeProjet .col.id{
+	display:none;
+}
+.listeProjet .dateModif{
+	color:#aaa;
+	font-style:italic;
+}
+.listeProjet .copie{
+	background-image:url('../img/copie.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width:50px;
+	height:40px;
+}
+.listeProjet .delete{
+	background-image:url('../img/delete.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width:50px;
+	height:40px;
+}
+
+.listeProjet .modif{
+	background-image:url('../img/view.png');
+	background-position: center;
+	background-repeat: no-repeat;
+	width:50px;	
+}
+
+/************************
+* Dilaog
+*************************/
+
+#loading,
+#bkgDialog{
+	background-color: rgba(10,10,10,0.4);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+	z-index:10;
+	display:none;
+}
+
+#loading{
+	background-image:url('../img/loading2_150.gif');	
+	background-repeat: no-repeat;
+    background-position: center;
+}
+
+#bkgDialog{
+	display:flex;
+	justify-content: center;
+    align-items: center;
+}
+
+#bkgDialog #dialogWindow{
+	background-color: #fff;
+	height: fit-content;
+	padding:20px;
+	border: 1px solid #555;
+    border-radius: 20px;
+	max-width: 500px;
+}
+
+#bkgDialog #dialogText{
+	margin-bottom: 20px;
+}
+
+/*debug*/
+
+#debugTrace .hl{
+	font-weight:bold;
+	background-color:lightblue;
+}

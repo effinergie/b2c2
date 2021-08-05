@@ -1,0 +1,3 @@
+-idInter,lotEtape,resTypeVentilation,-risque,-solution
+1,"ventilation,menuiserie","GazAuto,gazHygroA,gazHygroB,auto,hygroA,hygroB,bassePression,repartie",Risque sanitaire,"Le dimensionnement des entrées d'air en concordance avec le système de ventilation choisi (auto, hygro)"
+2,"ventilation,menuiserie",doubleFlux,Défaut de fonctionnement,Vérifier l'absence de modules d'entrées d'air dans les menuiseries et de grilles d'extraction dans les pièces humides ; si présent les colmater

@@ -1,0 +1,8 @@
+-idSol,typeBat,typeEcs ,-resTypeProdEcs,-resRecomEcs
+1,*,"gazCondensation,thermodynamique,solaire",nonPrioritaire,
+2,LC,*,balonElec,"siCETImpossible,isolBallon"
+3,*,*,ballonThermo,"calorClasse4,cop2_5"
+4,*,*,chaufCondensation,calorClasse4
+5,*,*,connectChauf,calorClasse4
+6,*,*,connectChaufAppointSol,calorClasse4
+7,*,*,nonTraite,

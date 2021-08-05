@@ -1,0 +1,17 @@
+-idSol,typePlancherBas ,structurePlancherBas ,resistPlancherBas,-resTypeIsoPlancherBas,-resCaracIsoPlancherBas,-resRecomPlancherBas
+100,*,*,rSup4_5,nonPrioritaire,,
+1,terrePlein,*,*,sousDalle,#nonSpecifie,"decaissement,herisson"
+2,"terrePlein,videSanNonAcc",*,*,surDalle,sousChape,
+3,"terrePlein,videSanNonAcc",*,*,surDalle,plancherBois,pvpFortSd
+4,videSanNonAcc,*,*,projeteRobot,,
+5,"videSanAcc,localNonChauffe,sousSol,exterieur",voutain,*,surDalle,sousChape,
+6,"videSanAcc,localNonChauffe,sousSol,exterieur",voutain,*,surDalle,plancherBois,
+7,"videSanAcc,localNonChauffe,sousSol,exterieur",voutain,*,projete,#laineMineraleOuPUR,
+8,"videSanAcc,localNonChauffe,sousSol,exterieur","dalleBeton,poutrEntrBeton,poutrEntrCeram,poutrEntrPolys,poutrEntrSynth",*,surDalle,sousChape,
+9,"videSanAcc,localNonChauffe,sousSol,exterieur","dalleBeton,poutrEntrBeton,poutrEntrCeram,poutrEntrPolys,poutrEntrSynth",*,surDalle,plancherBois,pvpFortSd
+10,"videSanAcc,localNonChauffe,sousSol,exterieur","dalleBeton,poutrEntrBeton,poutrEntrCeram,poutrEntrPolys,poutrEntrSynth",*,projete,#laineMineraleOuPUR,
+11,"videSanAcc,localNonChauffe,sousSol,exterieur","plancherBois,ossatureBois",*,surDalle,sousChape,
+12,"videSanAcc,localNonChauffe,sousSol,exterieur","plancherBois,ossatureBois",*,surDalle,plancherBois,pvpFortSd
+13,"videSanAcc,localNonChauffe,sousSol,exterieur","plancherBois,ossatureBois",*,projete,#laineMineraleOuPUR,
+14,"videSanAcc,localNonChauffe,sousSol,exterieur","plancherBois,ossatureBois",*,panneauxSousDale,#panneaux,
+15,*,*,*,nonTraite,,

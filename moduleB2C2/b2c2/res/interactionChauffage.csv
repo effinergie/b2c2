@@ -1,0 +1,4 @@
+-idInter,lotEtape,resTypeProd,typeProdChauffage,resTypeProd,-risque,-solution
+1,chauffage,*,"insertOuvert,insertFerme",*,Inconfort & surconsommation,"Si un appareil non étanche est changé, colmater les grilles de ventilation du local où était installé l'appareil et vérifier le dimensionnement des entrées d'air (mortaises) présentes"
+2,chauffage,*,*,*,Surconsommation,Le dimensionnement de l'appareil de chauffage doit être prévu par rapport au projet final. Prévoir l'utilisation d'appoint simple pour les états intermédiaires
+3,chauffage,*,*,appareilIndepBois,Confort,"Dans le cas d'une production principale avec appoint, la régulation ne doit autoriser le fonctionnement de l'appoint qu'en complément.  "

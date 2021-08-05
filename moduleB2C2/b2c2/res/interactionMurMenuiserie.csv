@@ -1,0 +1,6 @@
+-idInter,lotEtape,resTypeIsoMur,resTypePoseMenuiserie,-risque,-solution
+1,Mur,ite,"feuillure,tunnel,appliqueInt",Pont thermique + étanchéité à l'air,"Au niveau de la menuiserie, prévoir un retour d'isolant (R>0,4m².K/W) pour traiter le pont thermique (linteau, tableau & appui). Assurer l'étanchéité à l'air entre la nouvelle menuiserie et le mur. Les occultations seront adaptées à la nouvelle ITE et men"
+2,Mur,ite,appliqueExt,Pont thermique + étanchéité à l'air,"Assurer l'étanchéité à l'air entre la nouvelle menuiserie et le mur. Les occultations seront adaptées à la nouvelle ITE et menuiseries, pour s'assurer de la continuité d'isolation et d'étanchéité à l'air"
+3,Mur,iti,"feuillure,appliqueInt",Etanchéité à l'air,Assurer l'étanchéité à l'air entre la nouvelle menuiserie et le mur. 
+4,Mur,iti,"tunnel,appliqueExt",Pont thermique + étanchéité à l'air,"Au niveau de la menuiserie, prévoir un retour d'isolant (R>0,4m².K/W) pour traiter le pont thermique (linteau, tableau & appui).
+Assurer l'étanchéité à l'air entre la nouvelle menuiseries et le mur (réaliser une liaison de la membrane, ruban adhésif, mastic)"

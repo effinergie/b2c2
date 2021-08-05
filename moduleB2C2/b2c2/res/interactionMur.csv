@@ -1,0 +1,10 @@
+-idInter,lotEtape,resTypeIsoMur,planchInter,-risque,-solution
+1,mur,ite,*,Etanchéité à l'air,"La mise en œuvre d'une ITE n'assure pas l'étanchéité à l'air en partie courante.  il faudra mettre en œuvre un revêtement ou une membrane d'étanchéité,  intérieur ou extérieur, qui assure cette fonction. "
+2,mur,iti,*,Pont thermique,Prévoir un retour d'isolant le long des refends sur au moins 60 cm. 
+3,mur,iti,*,Etanchéité à l'air,Assurer une continuité du traitement d'étanchéité à l'air des murs à l'interface avec  les cloisonnements intérieurs
+4,mur,iti,oui,Etanchéité à l'air,Réaliser une dépose ou découpe périphérique du plancher afin de permettre la continuité de l'isolation et du traitement d'étanchéité à l'air des murs à l'interface avec le plancher maçonné ou plancher bois
+5,mur,iti,oui,Etanchéité à l'air,"Si la dépose périphérique du plancher n'est pas possible, assurer une continuité du traitement d'étanchéité à l'air des murs à l'interface avec le plancher maçonné ou entre solive avec plancher bois"
+6,mur,"iti,ite",*,Etanchéité à l'air,"Prévoir l'utilisation d'accessoires adaptés pour le traitement de l'étanchéité à l'air des pénétrations (œillets, adhesifs, mastic…)"
+7,mur,ite,*,Pont thermique,"Prévoir l'utilisation de rupteurs de pont thermique pour les fixations sur le mur (volets, descentes eaux pluviales…)"
+8,mur,ite,*,Pont thermique,"Prévoir une descente de l'isolation par l'extérieur sur 60 cm. Si l'isolation est enterrée, l'isolant devra être résistant à l'humidité"
+9,mur,ite,*,Pont thermique,Prévoir un traitement adapté du pont thermique au niveau des balcons si présents
