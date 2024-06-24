@@ -1,3 +1,7 @@
--idInter,lotEtape,contactPlancherHaut,-fenetreDeToit,-risque,-solution
-1,menuiserie,rampant,oui,Etanchéité à l'air,Réaliser un retour du dispositif de traitement d'étanchéité à l'air sur le dormant de la fenêtre de toit
-2,menuiserie,rampant,oui,Pont thermique,"Au niveau de la fenêtre de toit, prévoir la continuité d'isolation autour de la fenêtre de toit pour traiter le pont thermique "
+-idInter,lotEtape,lotTraiteApres,contactPlancherHaut,apres_contactPlancherHaut,fenetreDeToit,apres_fenetreDeToit,apres_resTypeIsoPlancherHaut,-niveau,-risque,-solution,-solutionMenages,-numFicheAdeme
+1,menuiserie,plancherHaut,*,rampant,oui,*,!sarking,risqNiv3,Remplacement des fenêtres de toit / Isolation toiture par l'intérieur,L'ordonnancement des travaux présente des risques.,,55
+2,menuiserie,plancherHaut,*,*,oui,*,sarking,risqNiv3,Remplacement des fenêtres de toit / Isolation du toit par l'extérieur ,L'ordonnancement des travaux présente des risques.,,54
+3,menuiserie,plancherHaut,*,toitTerrasse,oui,*,*,risqNiv3,Remplacement des fenêtres de toit / Isolation de la toiture terrasse,L'ordonnancement des travaux présente des risques.,,54
+4,plancherHaut,menuiserie,*,*,*,oui,*,risqNiv3,Isolation de la toiture / Remplacement des fenêtres de toit,L'ordonnancement des travaux présente des risques.,,53
+5,menuiserie,*,rampant,*,oui,*,*,,Etanchéité à l'air,Réaliser un retour du dispositif de traitement d'étanchéité à l'air sur le dormant de la fenêtre de toit.,"Assurez-vous que l'entreprise prévoie de faire un retour du dispositif de traitement de l'étanchéité à l'air sur le dormant (encadrement, partie fixe) de la fenêtre de toit. ",
+6,menuiserie,*,rampant,*,oui,*,*,,Pont thermique,"Au niveau de la fenêtre de toit, prévoir la continuité d'isolation autour de la fenêtre de toit pour traiter le pont thermique.",Assurez-vous que l'entreprise prévoie une continuité d'isolation autour de la fenêtre de toit (velux). ,

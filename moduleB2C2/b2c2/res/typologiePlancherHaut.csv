@@ -1,15 +1,15 @@
--idTypo,typoBat,-contactPlancherHaut,-structurePlancherHaut,-revInt_nonUtilise,-revExt_NonUtilise,-presIso_nonUtilise,-resistPlancherHaut,-part,-idSol,-numSol_nonUtilise,-etape
-1,maisRuralAv1948,rampant,charpTradi,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,100,3,1,1
-2,maisBourgAv1948,rampant,charpTradi,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rInf1,100,3,1,1
-3,pavBanlAv1948,comblePerdu,solivageBois,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rInf1,100,2,1,1
-4,pavBanlRecons1948_1974,comblePerdu,solivageBois,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,100,2,1,1
-5,pav1968_1974,comblePerdu,solivageBois,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,100,2,1,1
-6,pav1975_1985,comblePerdu,dalleBeton,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,100,2,1,1
-7,haussmanAv1948,rampant,charpTradi,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup4,100,3,1,1
-8,immDeBougAv1948,comblePerdu,solivageBois,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup4,100,2,1,1
-9,immBougeoisAv1948,toitTerrase,dalleBeton,Plaque de platre,Aucune,Non,rInf1,100,8,1,1
-10,petitColl1948_1974,toitTerrase,dalleBeton,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,100,8,1,1
-11,barres1948_1974,toitTerrase,dalleBeton,Plaque de platre,Aucune,Non,rInf1,100,8,1,1
-12,barres1975_1981,toitTerrase,dalleBeton,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup4,100,8,1,1
-13,echopeBordPleinPiedAv1948,comblePerdu,solivageBois,Lattis+plâtre,Présence d'un écran de sous-toiture HPV ventilée,Oui sans pare vapeur ou frein vapeur côté chaud,rInf1,100,2,1,1
-14,echopeBordRP1_1948,rampant,charpTradi,Plaque de platre,Présence d'un écran de sous-toiture HPV ventilée,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,100,3,1,2
+-idTypo,typoBat,-contactPlancherHaut,-structurePlancherHaut,-revInt_nonUtilise,-revExt_NonUtilise,-presIso_nonUtilise,-perfPlancherHautInit,-perfPlancherHautFinal,-part,-idSol,-numSol_nonUtilise,-etape
+1,maisRuralAv1948,rampant,charpTradi,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,defaut,100,3,1,1
+2,maisBourgAv1948,rampant,charpTradi,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rInf1,defaut,100,3,1,1
+3,pavBanlAv1948,comblePerdu,solivageBois,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rInf1,defaut,100,2,1,1
+4,pavBanlRecons1948_1974,comblePerdu,solivageBois,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,defaut,100,2,1,1
+5,pav1968_1974,comblePerdu,solivageBois,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,defaut,100,2,1,1
+6,pav1975_1985,comblePerdu,dalleBeton,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,defaut,100,2,1,1
+7,haussmanAv1948,rampant,charpTradi,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rInf1,defaut,100,3,1,1
+8,immDeBougAv1948,comblePerdu,solivageBois,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup4,defaut,100,2,1,1
+9,immBougeoisAv1948,toitTerrasse,dalleBeton,Plaque de platre,Aucune,Non,rInf1,defaut,100,8,1,1
+10,petitColl1948_1974,toitTerrasse,dalleBeton,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,defaut,100,8,1,1
+11,barres1948_1974,toitTerrasse,dalleBeton,Plaque de platre,Aucune,Non,rInf1,defaut,100,8,1,1
+12,barres1975_1981,toitTerrasse,dalleBeton,Plaque de platre,Aucune,Oui sans pare vapeur ou frein vapeur côté chaud,rSup4,defaut,100,8,1,1
+13,echopeBordPleinPiedAv1948,comblePerdu,solivageBois,Lattis+plâtre,Présence d'un écran de sous-toiture HPV ventilée,Oui sans pare vapeur ou frein vapeur côté chaud,rInf1,defaut,100,2,1,1
+14,echopeBordRP1_1948,rampant,charpTradi,Plaque de platre,Présence d'un écran de sous-toiture HPV ventilée,Oui sans pare vapeur ou frein vapeur côté chaud,rSup1,defaut,100,3,1,2

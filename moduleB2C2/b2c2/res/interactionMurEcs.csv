@@ -1,2 +1,2 @@
--idInter,lotEtape,resTypeProdEcs,-risque,-solution
-1,"mur,ecs","ballonThermo,chaufCondensation",Etanchéité à l'air,"Assurer l'étanchéité à l'air autour des conduits d'air neuf et de rejet avec des dispositifs adaptés (œillet, ruban adhésif, mastic, …)"
+-idInter,lotEtape,lotTraiteApres,resTypeIsoMur,resTypeProdEcs,-niveau,-risque,-solution,-solutionMenages,-numFicheAdeme
+2,"mur,ecs",*,*,"ballonThermo,chaufCondensation",,Etanchéité à l'air,"Assurer l'étanchéité à l'air autour des conduits d'air neuf et de rejet avec des dispositifs adaptés (œillet, ruban adhésif, mastic, …).","Vérifiez que l’entreprise assure l'étanchéité à l'air autour des conduits d'air neuf et de rejet avec des dispositifs adaptés (œillet, ruban adhésif, mastic, …).",

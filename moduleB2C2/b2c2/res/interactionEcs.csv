@@ -1,3 +1,3 @@
--idInter,lotEtape,resTypeProdEcs,-risque,-solution
-1,ecs,*,Etanchéité à l'air,"Prévoir l'utilisation d'accessoires adaptés pour le traitement de l'étanchéité à l'air des pénétrations liées aux réseaux (œillets, adhesifs, mastic…)"
-2,ecs,*,Confort & surconsommation,Mettre en place des dispositifs de réduction de consommation d'eau chaude (réducteur de débit par exemple)
+-idInter,lotEtape,resTypeProdEcs,-risque,-solution,-solutionMenages
+1,ecs,*,Etanchéité à l'air,"Prévoir l'utilisation d'accessoires adaptés pour le traitement de l'étanchéité à l'air des pénétrations liées aux réseaux (œillets, adhesifs, mastic…).","Vérifiez que l'entreprise prévoie l'utilisation d'accessoires adaptés pour le traitement de l'étanchéité à l'air des pénétrations liées aux réseaux (œillets, adhésifs, mastic…). "
+2,ecs,*,Confort & surconsommation,Mettre en place des dispositifs de réduction de consommation d'eau chaude (réducteur de débit par exemple).,Demandez à l'entreprise de mettre en place des dispositifs de réduction de consommation d'eau chaude (réducteur de débit par exemple).

@@ -1,0 +1,252 @@
+/************************
+* Feuille de route
+*************************/
+
+#contenuFeuille .warning{
+	color:#FF0000;
+}
+
+
+#contenuFeuille .divTabPdf,
+#contenuFeuille .divTabPdf > tbody,
+#contenuFeuille .divTabPdf > tbody > tr,
+#contenuFeuille .divTabPdf > tbody > tr > td
+{
+	display:block;
+}
+
+#contenuFeuille .tabFdr {
+	/*margin-bottom:40px;*/
+	width:100%;
+}
+
+#contenuFeuille .tabFdr .lgn{
+	/*display:table-row;*/
+}
+
+
+
+#contenuFeuille .tabFdr .col{
+	/*display:table-cell;*/
+	border:1px solid #ccc;
+	padding:5px;
+	vertical-align:top;
+}
+
+#contenuFeuille .tabFdr .col.nomLot{
+	vertical-align:middle;
+}
+
+#contenuFeuille .tabFdr .col.recom,
+#contenuFeuille .tabFdr .col.perfFinale,
+#contenuFeuille .tabFdr .col.descTrav{
+	background-color:#ddd;
+}
+
+#contenuFeuille .tabFdr .col.perfFinale{
+	color : #232390;
+}
+
+#contenuFeuille .tabFdr .entete .col.perfFinale{
+	color : inherit;
+}
+
+#contenuFeuille .tabFdr .col.existant,
+#contenuFeuille .tabFdr .col.recom,
+#contenuFeuille .tabFdr .col.descTrav{
+	width:29%;
+}
+#contenuFeuille .tabFdr .col.nomLot{
+	width:6%;
+}
+
+#contenuFeuille .tabFdr .col.titreTab{
+	background-color:#BBB;
+	vertical-align:middle;
+	-webkit-print-color-adjust: exact;
+	print-color-adjust: exact;
+	color-adjust: exact;
+}
+
+#contenuFeuille .titreFdr{
+	border: 1px solid #ccc;
+    background-color: #a97b50;
+    font-weight: bold;    
+    padding: 10px;
+    margin-bottom: 10px;
+	display:flex;
+	justify-content:center;
+}
+
+#contenuFeuille .champFdr{
+	/*display: flex;*/
+	width:100%;
+}
+
+#contenuFeuille .champFdr .lib{
+	width:50%;
+}
+/*
+#contenuFeuille .champFdr .val{
+	text-align:right;
+}*/
+
+#contenuFeuille .champFdr.description {
+    display : block
+}
+#contenuFeuille .champFdr.description .lib{
+	margin-bottom:5px;
+}
+#contenuFeuille .champFdr.description .val{
+	text-align : justify;
+}
+
+
+#contenuFeuille .perfErr{
+	color:#FF0000;
+}
+
+
+/*conformite*/
+#contenuFeuille .imgMPR,
+#contenuFeuille .imgConformite{
+    height: 32px;
+    margin-right: 20px;
+	float:left;
+}
+
+#contenuFeuille .imgMPR{
+	height: 20px;
+}
+
+
+#contenuFeuille .tabFdr.GESDegrade,
+#contenuFeuille .tabFdr.conformite{
+	margin-bottom: 0;
+}
+ 
+/* Tableau d'évolution des consomations*/
+#contenuFeuille .tabConso .col{
+	vertical-align:middle !important;
+}
+
+#contenuFeuille .tabConso .col .contDpe{
+	/*display: flex;
+	justify-content: space-around;*/
+	width: 100%;
+    text-align: center;
+}
+
+#contenuFeuille .tabConso .col .contDpe .imgDpe{
+	/*max-width: 300px;*/
+	max-height: 300px;
+}
+
+
+#contenuFeuille .tabConso .col .contDpe .graphLegend {
+    font-size: 12px;
+    font-style: italic;
+}
+
+#contenuFeuille .tabConso .colFleche{
+	min-width : 90px;
+}
+
+#contenuFeuille .tabConso .fleche{
+	position:relative;
+	z-index:0;	
+    text-align: center;
+	margin: 20px 0px;
+	font-weight: bold;
+	color : #fff;
+	transform: rotate(90deg);
+}
+
+#contenuFeuille .tabConso .fleche:before{
+	content: "\01F82E";
+    font-size: 120px;
+    position: absolute;
+    color: #ed6035;
+	z-index:-1;
+	margin-left: -20px;
+	top:2px;	
+}
+
+
+
+#contenuFeuille .vallignMiddle{
+	vertical-align:middle !important;
+}
+#contenuFeuille .textRight{
+	text-align:right; 		
+}
+
+
+/************************
+* Interactions
+*************************/
+
+#contenuFeuille .titreTab{
+	text-align :center;
+}
+
+#contenuFeuille .tabInter .lots,
+#contenuFeuille .tabInter .risques{
+	width:130px;
+}
+
+#contenuFeuille .tabInter .lots{
+	vertical-align:middle;
+}
+
+#contenuFeuille .risqNiv1{
+	background-color:#92d050;
+}
+
+#contenuFeuille .risqNiv2{
+	background-color:#ffd967;
+}
+
+#contenuFeuille .risqNiv3{
+	background-color:#ff6c6c;
+}
+
+#contenuFeuille .legendRisq {
+    margin-bottom: 40px;
+   /* margin-top: -30px;*/
+}
+
+#contenuFeuille .legendRisq img{
+	width:16px;
+	height:auto;
+}
+
+
+#contenuFeuille .legendRisq td {
+	padding-left:5px;
+}
+
+#contenuFeuille .iconAndTextIcon {
+    width: 40px;
+}
+/************************
+* rowspan Dom PDF bug
+*************************/
+
+/*contournement rowspan et page break de domPDF*/
+.sansBord2,.sansBordBas,.sansBordHaut{
+	vertical-align : top;
+}
+
+.sansBord2{
+	border-bottom-color: transparent !important;
+	border-top-color: transparent !important;	
+}
+
+.sansBordBas{
+	border-bottom-color: transparent !important;	
+}
+
+.sansBordHaut{
+	border-top-color: transparent !important;	
+}

@@ -1,4 +1,9 @@
--idInter,lotEtape,resTypeIsoMur,typePlancherBas,-risque,-solution
-1,plancherBas,ite,*,Pont thermique,Prévoir une descente de l'isolation du plancher sur 40 cm
-2,"plancherBas,mur",ite,exterieur,Pont thermique,Prévoir la continuité de l'isolation entre la sous face et l'isolation par l'extérieur
-3,"plancherBas,mur",iti,*,Etanchéité à l'air,Prévoir la continuité du traitement d'étanchéité à l'air (membrane ou autre) entre l'isolation par l'intérieur du mur et le plancher bas ; réaliser une découpe du plancher ou retour membranes sur les deux faces du plancher (au moins la face supérieure)
+-idInter,lotEtape,lotTraiteApres,resTypeIsoMur,apres_resTypeIsoMur,typePlancherBas,apres_typePlancherBas,resTypeIsoPlancherBas,apres_resTypeIsoPlancherBas,-niveau,-risque,-solution,-solutionMenages,-numFicheAdeme
+1,mur,plancherBas,iti,*,*,*,*,surDalle,risqNiv2,Isolation des murs par l'intérieur / Isolation du plancher bas sous chape,L'ordonnancement des travaux présente des risques. ,,34
+2,mur,plancherBas,ite,*,*,*,*,surDalle,risqNiv1,Isolation des murs par l'extérieur / Isolation du plancher bas sous chape,L'ordonnancement des travaux présente des risques. ,,38
+3,mur,plancherBas,ite,*,*,*,*,sousDalle,risqNiv1,Isolation des murs par l'extérieur /Isolation du placher bas sous dalle,L'ordonnancement des travaux présente des risques. ,,38
+6,plancherBas,mur,*,iti,*,*,surDalle,*,risqNiv2,Isolation du plancher sous chape / Isolation des murs par l'intérieur,L'ordonnancement des travaux présente des risques. ,,35
+7,plancherBas,mur,*,iti,terrePlein,*,*,*,risqNiv2,Isolation du plancher bas sur terre plein / Isolation des murs par l'intérieur,L'ordonnancement des travaux présente des risques. ,,37
+9,plancherBas,*,ite,*,*,*,*,,,Pont thermique,Prévoir une descente de l'isolation du plancher sur 40 cm.,Assurez-vous que l'entreprise prévoie de réaliser une descente d'isolant ,
+10,"plancherBas,mur",*,ite,*,exterieur,*,*,,,Pont thermique,Prévoir la continuité de l'isolation entre la sous face et l'isolation par l'extérieur.,L'entreprise doit prévoir une continuité d'isolation entre la sous face du plancher et l'isolation par l'extérieur des murs. ,
+11,"plancherBas,mur",*,iti,*,*,,*,,,Etanchéité à l'air,Prévoir la continuité du traitement d'étanchéité à l'air (membrane ou autre) entre l'isolation par l'intérieur du mur et le plancher bas ; réaliser une découpe du plancher ou retour membranes sur les deux faces du plancher (au moins la face supérieure).,L'entreprise doit prévoir la continuité du traitement d'étanchéité à l'air (membrane ou autre) entre l'isolation par l'intérieur du mur et le plancher bas ; Elle doit réaliser une découpe du plancher ou retour membranes sur les deux faces du plancher (au moins la face supérieure).,

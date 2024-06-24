@@ -1,15 +1,15 @@
--idTypo,typoBat,-typePlancherBas,-structurePlancherBas,-presnecIsol_nonUtilise,-resistPlancherBas,-part,-idSol,-numSol_NonUtilise,-etape
-1,maisRuralAv1948,terrePlein,dalleBeton,Non,r0,100,15,pas de travaux,2
-2,maisBourgAv1948,terrePlein,dalleBeton,Non,r0,100,1,1,2
-3,pavBanlAv1948,terrePlein,dalleBeton,Non,r0,100,15,pas de travaux,2
-4,pavBanlRecons1948_1974,terrePlein,poutrEntrBeton,Non,r0,100,15,pas de travaux,2
-5,pav1968_1974,sousSol,dalleBeton,Non,r0,100,10,1,2
-6,pav1975_1985,videSanNonAcc,dalleBeton,Oui,rInf1,100,2,1,2
-7,haussmanAv1948,sousSol,ossatureBois,Oui,rSup1,100,13,1,2
-8,immDeBougAv1948,sousSol,voutain,Non,r0,100,5,1,2
-9,immBougeoisAv1948,sousSol,voutain,Non,r0,100,5,1,2
-10,petitColl1948_1974,sousSol,poutrEntrBeton,Non,r0,100,10,1,2
-11,barres1948_1974,sousSol,dalleBeton,Non,r0,100,10,1,2
-12,barres1975_1981,sousSol,dalleBeton,Oui,rSup1,100,10,1,2
-13,echopeBordPleinPiedAv1948,terrePlein,ossatureBois,Non,r0,100,1,1,2
-14,echopeBordRP1_1948,terrePlein,ossatureBois,Non,r0,100,1,1,2
+-idTypo,typoBat,-typePlancherBas,-structurePlancherBas,-presnecIsol_nonUtilise,-perfPlancherBasInit,-perfPlancherBasFinal,-part,-idSol,-numSol_NonUtilise,-etape
+1,maisRuralAv1948,terrePlein,dalleBeton,Non,r0,defaut,100,15,pas de travaux,2
+2,maisBourgAv1948,terrePlein,dalleBeton,Non,r0,defaut,100,1,1,2
+3,pavBanlAv1948,terrePlein,dalleBeton,Non,r0,defaut,100,15,pas de travaux,2
+4,pavBanlRecons1948_1974,terrePlein,poutrEntrBeton,Non,r0,defaut,100,15,pas de travaux,2
+5,pav1968_1974,sousSol,dalleBeton,Non,r0,defaut,100,10,1,1
+6,pav1975_1985,videSanNonAcc,dalleBeton,Oui,rInf1,defaut,100,4,1,1
+7,haussmanAv1948,sousSol,ossatureBois,Oui,rInf1,defaut,100,13,1,2
+8,immDeBougAv1948,sousSol,voutain,Non,r0,defaut,100,5,1,2
+9,immBougeoisAv1948,sousSol,voutain,Non,r0,defaut,100,5,1,2
+10,petitColl1948_1974,sousSol,poutrEntrBeton,Non,r0,defaut,100,10,1,2
+11,barres1948_1974,sousSol,dalleBeton,Non,r0,defaut,100,10,1,2
+12,barres1975_1981,sousSol,dalleBeton,Oui,rSup1,defaut,100,10,1,2
+13,echopeBordPleinPiedAv1948,terrePlein,ossatureBois,Non,r0,defaut,100,1,1,2
+14,echopeBordRP1_1948,terrePlein,ossatureBois,Non,r0,defaut,100,1,1,2

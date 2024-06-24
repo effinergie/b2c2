@@ -1,2 +1,2 @@
--idInter,lotEtape,protectionSolaireMenuiserie,-risque,-solution
-1,menuiserie,voletRoulant,Pont thermique & étanchéité à l'air,"Dans le cadre de coffres intérieurs conservés, prévoir de renforcer l'étanchéité à l'air avec la menuiserie et le mur. Une isolation rigide peut être mis en œuvre dans le coffre selon la place disponible"
+-idInter,lotEtape,lotTraiteApres,protectionSolaireMenuiserie,-niveau,-risque,-solution,-solutionMenages,-numFicheAdeme
+2,menuiserie,*,voletRoulant,,Pont thermique & étanchéité à l'air,"Dans le cadre de coffres intérieurs conservés, prévoir de renforcer l'étanchéité à l'air avec la menuiserie et le mur. Une isolation rigide peut être mis en œuvre dans le coffre selon la place disponible.","Lorsque les coffres de volets roulants sont conversés, vérifiez que le devis prévoie un renforcement de l'étanchéité à l'air entre la menuiseries et le mur (par exemple avec un isolant rigide dans le coffre). ",

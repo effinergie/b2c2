@@ -1,2 +1,4 @@
--idInter,lotEtape,lotTraite,resTypeVentilation,typeProdChauffage,-risque,-solution
-1,ventilation,!chauffage,"GazAuto,gazHygroA,gazHygroB,auto,hygroA,hygroB,bassePression,repartie,doubleFlux","insertOuvert,insertFerme",Défaut de fonctionnement / risque sanitaire mortel (refoulement de gaz),Prévoir une entrée d'air dédiée ou changement du système de production
+-idInter,lotEtape,lotTraiteApres,lotTraite,resTypeVentilation,typeProdChauffage,resTypeProd,apres_resTypeProd,-niveau,-risque,-solution,-solutionMenages,-numFicheAdeme
+1,chauffage,ventilation,*,*,*,appareilIndepBois,*,risqNiv2,Appareil de chauffage non étanche / Changement du système de ventilation,L'ordonnancement des travaux peut présenter des risques sanitaires.,,70
+2,ventilation,chauffage,*,*,*,*,appareilIndepBois,risqNiv3,Changement du système de ventilation / Appareil de chauffage non étanche,L'ordonnancement des travaux peut présenter des risques sanitaires mortels.,,70
+3,ventilation,*,!chauffage,"GazAuto,gazHygroA,gazHygroB,auto,hygroA,hygroB,bassePression,repartie,doubleFlux","insertOuvert,insertFerme",*,*,,Défaut de fonctionnement / risque sanitaire mortel (refoulement de gaz),Prévoir une entrée d'air dédiée ou changement du système de production,Vérifiez que l'entreprise prévoie une entrée d'air dédiée ou un changement du système de production. ,

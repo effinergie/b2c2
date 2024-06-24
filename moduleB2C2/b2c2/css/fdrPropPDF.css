@@ -1,0 +1,646 @@
+
+
+
+
+/*contournement rowspan et page break de domPDF*/
+
+.sansBord2,.sansBordBas,.sansBordHaut{
+	vertical-align : top;
+}
+
+.sansBord2{
+	border-bottom-color: transparent !important;
+	border-top-color: transparent !important;	
+}
+
+.sansBordBas{
+	border-bottom-color: transparent !important;	
+}
+
+.sansBordHaut{
+	border-top-color: transparent !important;	
+}
+
+/***********************/
+/* Audit Proprietaire */
+/***********************/
+
+table{
+	width:100%;
+	border-collapse: collapse;
+}
+
+@page{
+	margin:30px;
+}
+
+body{
+	margin-top:70px;
+	margin-bottom:40px;
+	font-family:"DejaVu Sans";
+	font-size:14px;
+	line-height:16px;
+	/*border:1px solid;*/
+}
+/*
+.pageBackGround{
+	background-color:#fcf3f6;
+	
+	position: absolute;
+	top: -10px;
+	left: -10px;
+	right: -10px;
+	bottom: -10px;
+	z-index:-10;
+}
+
+.pageBackGround.color{
+	position: fixed;
+}*/
+
+
+
+/* header & footer */
+
+#header {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 50px;
+}
+
+#footer {
+	position: fixed; 
+	bottom: -10px; 
+	left: -5px; 
+	right: -5px;
+	height: 50px; 
+	/*border:1px solid;*/
+}
+
+/*
+.pageEntete{
+	position: absolute;
+	top: -5px;
+	left: 0px;
+	right: 0px;
+	height: 50px;
+}*/
+
+/*
+.headerProp{
+	text-align:center;
+	font-size:22px;
+	letter-spacing: -1px;
+	line-height:25px;
+	width:500px;
+	margin:auto;
+}*/
+
+.iconAndTextIcon{
+	vertical-align:top;
+	width:40px;
+}
+
+.iconAndTextText{
+	width:auto;
+}
+
+
+#headerLogo{
+	position:fixed;
+	left:-10px;
+	top:-5px;
+	height:60px;
+	width:auto;	
+}
+
+.footerLogo{
+	height:40px;
+	vertical-align:sub;
+	/*border:1px solid;*/
+}
+
+.footerLogo.Pouget{
+	margin-bottom:-3px;
+}
+.footerLogo.Effi{
+	height:25px;
+	margin-bottom:3px;
+	margin-right:5px;
+}
+.footerLogo.Ademe{
+	position:fixed;
+	right:10px;
+	/*top:-8px;*/
+	margine-left:10px;
+}
+
+
+#versionB2C2{
+	font-size:10px;
+	color:#AAAAAA;
+	font-style:italic;
+	display:inline;
+}
+
+/*blocs textes */
+
+
+
+.blocTexte{	
+	margin-top : 20px;
+	text-align:justify;
+	/*margin: 20px 10px;
+	padding:15px;
+	border-radius:10px;*/
+}
+/*
+.blocTitre{
+	font-size:17px;
+	font-weight:bold;	
+}*/
+
+/*li{
+	margin-bottom:15px;
+}
+*/
+.listNum
+{
+	list-style-type: decimal;
+}
+
+.titre1{
+	color:#e7854a;
+	font-size:24px;
+	line-height:26px;
+	font-weight:bold;
+}
+
+.soutTitre1{
+	color:#90c2dc;
+	font-size:20px;
+	line-height:22px;
+	font-style:italic;
+	
+}
+
+.titre2{
+	color:#e7854a;
+	font-size:18px;
+	line-height:24px;
+	font-weight:bold;
+}
+
+.titreSection{	
+	display:table;
+	font-size:22px;
+	line-height:24px;
+	font-weight:bold;	
+	margin:auto;
+	padding:10px 20px;
+	margin-bottom:20px;
+	text-align:center;
+	background-color:#e7854a;
+	color:#FFF;
+	width:80%
+}
+
+.tRaisonL, .tRaisonR{
+	width:50%;
+	text-align:justify;
+	padding-top:20px;
+	vertical-align:top;
+}
+
+
+.tRaisonL{
+	padding-right:10px;	
+	
+}
+.tRaisonR{
+	padding-left:10px;
+
+}
+
+.pbrNone{
+	page-break-inside:avoid;
+}
+
+.pbra{
+	page-break-after:always;
+}
+
+.pbrb{
+	page-break-before:always;
+}
+
+
+/**********
+* parcour
+**********/
+
+/*
+.tabParcour td{
+	border: 1px solid;
+}*/
+
+.tabParcour{
+	position:relative;
+	width:600px;
+	margin:auto;
+}
+
+.blocParcourEtape{
+	border:1px solid #aaa;
+	background-color:#fff;
+	padding: 5px;
+	width:250px;
+	margin-left:0px;
+	margin-right:auto;
+}
+
+.linePair .blocParcourEtape{
+	margin-left:auto;
+	margin-right:0px;
+}
+
+.parcourTitre{
+	text-align:center;
+	margin:-6px;
+	font-size:18px;
+	line-height:20px;
+	padding:3px;
+	font-weight:bold;
+}
+
+.parcourCellCentre{
+	position:relative;
+	/*width:300px;*/
+	border-width:0px;
+	padding:0;
+}
+
+.imgCheminCentre{
+	top:70px;
+	height:25.5px;
+	position:absolute;
+	margin-left:-1px;
+	z-index:-1;
+	/*border:1px solid;*/
+}
+
+.lineImpair .imgCheminCentre{
+	right:0px;
+	margin-right:-1px;	
+}
+
+.lastLine.lineImpair .imgCheminCentre{
+	transform: scaleX(-1);
+}
+
+.tabParcour .blocTitre{
+	text-align:center;
+}
+
+.parcourCellTxt,
+.parcourCellChem{
+	height:170px;
+	position:relative;
+	width:100px;
+	border-width:0px;
+	padding:0;
+	z-index:0;
+}
+
+.parcourCellChem{
+	overflow:hidden;
+}
+
+.parcourCellTxt{
+	width:0;
+	z-index:1;
+	/*display:block;*/
+}
+
+.numPageWrite{
+	/*border:1px solid;*/
+	width:15px;
+	display:inline-block;
+	text-align:left;
+	vertical-align:top;
+}
+
+
+/*
+.flecheParcour{
+	height:50%;
+	position:absolute;
+	top:50%;
+	border-top:10px solid #000000;
+	border-left:10px solid #000000;
+	border-top-left-radius:50px;
+
+}*/
+
+/*
+.cntImgChemin{
+	position:absolute;
+	top:0;
+	bottom:0;
+	height:100%;
+	width:100%;
+	overflow:hidden;
+}*/
+
+.imgChemin{
+	top:70.2px;
+	width:100px;
+	position:absolute;
+	/*border:1px solid;*/
+}
+
+.flipY{
+	top:95.3px;
+	transform: scaleY(-1);transform-origin: 0%;
+}
+
+.flipX{
+	top:70.2px;
+	transform: scaleX(-1);
+}
+
+.flipXY{
+	top:95.3px;
+	transform: scale(-1,-1);transform-origin: 50% 0%;
+}
+
+/*
+.pacrourInter{
+	position:absolute;
+	bottom:-40px;
+	text-align:center;
+	color:black;
+	text-decoration:none;
+}*/
+
+.lienPage{
+	text-decoration:none;
+	color:black;
+}
+/*
+.cellG .pacrourInter{
+	right:0;
+}*/
+
+.classeDPE{
+	position:absolute;
+	top:59px;	
+}
+			
+.cellG .classeDPE{
+	left:145px;
+}
+.cellD .classeDPE{
+	right:145px;
+}
+
+.firstLine .cellG .classeDPE{
+	left:0px;
+}
+
+.classeDPE img{
+	width:60px;	
+}
+
+.labelBBC{
+	position:absolute;
+	height:60px;
+	top:82%;
+	width:150px;
+	background-color:#fff;
+	/*border:1px solid;*/
+	z-index:10;
+}
+
+.lastLine .labelBBC{
+	top:50px;
+}
+
+.labelBBC img{
+	height:60px;	
+	vertical-align:center;
+	margin-bottom:-45px;
+}
+
+.cellG .labelBBC{
+	left:-50px;
+}
+.cellD .labelBBC{
+	left:-100px;
+}
+
+
+.parcourRespCrit{
+	background-color:#fff;
+	width:150px;
+	margin-top:35px;
+	margin-left:5px;
+}
+
+.parcourRespCrit .iconAndTextIcon{	
+	width:15px;
+}
+
+.parcourRespCrit img{	
+	width:20px;
+	height:auto;
+}
+
+
+.parcourLots{
+	margin-bottom:0;
+}	
+
+.parcourLots li{
+	margin:none;
+}
+
+.parcourLegend{
+	page-break-after:always;
+	font-size:10px;
+	line-height:10px;
+	text-align:center;
+}
+
+
+/**********
+* Détail Etapes
+**********/
+
+.detailEtape{
+	page-break-after:always;
+}
+/*
+.tireEtape{
+	display:table;
+	font-size:20px;
+	font-weight:bold;	
+	background-color:#ccc;
+	margin: 10px auto;
+	padding:10px 20px;
+}*/
+
+.introEtape{
+	text-align:justify;
+	font-style: italic;
+	z-index:1;
+}
+
+.tabFdr{
+	padding:10px 0;
+}
+
+.tabFdr .col{
+	padding:8px;
+	background-color:#FFF;
+	border:1px solid #ccc;	
+	vertical-align:top;
+
+}
+
+.tabFdr .entete .col{
+	background-color:#ccc;
+	text-align:center;
+	font-weight:bold;
+}
+
+.descTrav{
+	width:250px;
+}
+.recom{
+	text-align:justify;
+}
+
+.tabInter .risques{
+	width:120px;
+}
+
+.tabInter .surtitre{
+	display:none;
+}
+
+.tabInter img{
+	width:30px;
+	height:auto;
+}
+
+.legendRisq{
+	margin-top:10px;
+	margin-bottom:20px;
+}
+
+
+
+.legendRisq img{
+	width:18px;
+	vertical-align:middle;
+}
+
+.detailLot{
+	page-break-after:always;
+	/*page-break-inside: avoid;*/
+}
+
+.titreLot{
+	margin-bottom: 10px;
+	font-size:20px;
+	line-height:22px;
+	font-weight : bold;
+}
+
+
+
+.pictoLot{
+	/*border:1px solid;*/
+	/*float:left;*/
+	display:inline;
+	width:45px;
+	vertical-align:sub;
+	margin-right:10px;
+	/*
+	padding:0;
+	line-height:3px;*/
+}
+
+
+/**********
+* respect Critères
+**********/
+
+.conformite{
+	page-break-inside:avoid;
+}
+
+.imgConformite{
+	width:30px;
+}
+
+
+.conformite {
+	padding-top:0;
+	padding-bottom:0;
+}
+
+/*exigeances B2C2*/
+.blocEtape{
+	margin-top:20px;
+}
+
+/*.interGlob{
+	font-weight:bold;
+}*/
+
+.iconAndTextIcon.interGlob{
+	width:30px;
+	padding-right:8px;
+	padding-top:10px;
+}
+
+
+
+/**********
+* surcharge
+**********/
+.nEtape1 .tabFdr .entete .col,
+.color1{
+	background-color:#90c2dc;
+}
+
+.nEtape2 .tabFdr .entete .col,
+.color2{
+	background-color:#f9ae76;
+}
+
+.nEtape3 .tabFdr .entete .col,
+.color3{
+	background-color:#c2e8fa;
+}
+
+.nEtape1 .tabFdr .col,
+.bordColor1{
+	border-color:#90c2dc;
+}
+
+.nEtape2 .tabFdr .col,
+.bordColor2{
+	border-color:#f9ae76;
+}
+
+.nEtape3 .tabFdr .col,
+.bordColor3{
+	border-color:#c2e8fa;
+}
+
+

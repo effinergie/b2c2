@@ -1,0 +1,228 @@
+body{
+	font-family:"DejaVu Sans";
+	font-size:12px;
+	line-height:12px;
+}
+
+img{
+	width:100%;
+}
+
+table{
+	width:100%;
+	border-collapse: collapse;
+}
+
+table.tabFdr{	
+	
+}
+
+.col{
+	vertical-align:top;
+	border:1px solid #ccc;
+	text-align:left;
+	padding:6px;	
+}
+
+.titreTab{	
+	text-align:center;
+	background-color:#aaa;		
+}
+
+.titreFdr{
+	padding:8px;
+	text-align:center;
+	background-color:#a97b50;
+	border:1px solid #555;	
+	font-weight:bold;
+}
+
+.champFdr td{
+	width:50%;
+}
+
+.imgConformite{
+	width:30px;
+}
+
+.iconAndTextIcon{
+	vertical-align:top;
+	width:40px;
+}
+
+
+.iconAndTextText{
+	width:auto;
+}
+
+.imgDpe{
+	width:320px;
+}
+
+.graphLegend{
+	font-size:7px;
+	font-style: italic;
+}
+
+.warning{
+	color:#FF0000;
+}
+
+.warningApi{
+	text-align:center;
+	color:#FFFFFF;
+	font-weight:bold;
+	font-size:14px;					
+	line-height:20px;
+	background-color:#FF0000;
+}
+
+.dpeGes{
+	text-align:right;
+}
+.dpeCep{
+	text-align:left;
+}
+
+.perfErr{
+	color:FF0000;
+}
+
+.textRight{
+	text-align:right;
+}
+
+
+/* interactions */
+
+
+.lots{
+	width:25%;
+}
+
+.tabInter .risques{
+	width:120px;
+}
+
+
+.traitement{
+	width:50%;
+	text-align:justify;
+}
+
+.legendRisq{
+	margin-top:10px;
+	margin-bottom:20px;
+}
+
+
+.legendRisq img{
+	width:18px;
+	vertical-align:middle;
+}
+
+.notesBasPage{
+	position:absolute;
+	bottom:0px;
+	font-size:8px;
+}
+
+.risqNiv1{
+	background-color:#47a25b;
+}
+
+.risqNiv2{
+	background-color:#ffa240;
+}
+
+.risqNiv3{
+	background-color:#ff6c6c;
+}
+
+
+/*Tableau des etapes */
+
+.tabEtape{
+	width:100%;
+}
+
+.nomLot{
+	width:15%;
+}
+
+.existant{
+	width:20%;
+}
+
+
+.perfFinale{
+	width:15%;
+}
+.recom{
+	width:'.($this->bFdrEditeur ? 45 : 30).'%;
+}
+				
+/* header & footer */
+
+#header {
+	position: fixed;
+	top: -40px;
+	left: 0px;
+	right: 0px;
+	height: 50px;
+
+	/** Extra personal styles **/
+	/* background-color: #03a9f4; */
+	/*color: white;*/
+	/*text-align: center;*/
+	/*line-height: 35px;*/
+}
+
+#footer {
+	position: fixed; 
+	bottom: -55px; 
+	left: 0px; 
+	right: 0px;
+	height: 50px; 
+
+	/** Extra personal styles **/
+	/*background-color: #03a9f4;
+	color: white;
+	text-align: center;*/
+	/*line-height: 35px;*/
+}
+
+
+/*contournement rowspan et page break de domPDF*/
+
+.sansBord2,.sansBordBas,.sansBordHaut{
+	vertical-align : top;
+}
+
+.sansBord2{
+	border-bottom-color: transparent !important;
+	border-top-color: transparent !important;	
+}
+
+.sansBordBas{
+	border-bottom-color: transparent !important;	
+}
+
+.sansBordHaut{
+	border-top-color: transparent !important;	
+}
+
+.pbrNone{
+	page-break-inside:avoid;
+}
+
+.pbra{
+	page-break-after:always;
+}
+
+.pbrb{
+	page-break-before:always;
+}
+
+
+

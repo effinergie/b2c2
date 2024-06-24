@@ -1,0 +1,27 @@
+V1.07
+--------
+* Modification du graphisme de le feuille de route
+* Test du Ubat à la dernière étape de travaux quand il est présent dans la XML
+* Suppression du tableau des aides financières (obsolète)
+
+
+V1.06
+--------
+* Première version de la feuille de route ménages
+* ApiFdr : Seuls les éléments référencés dans les nœuds "travaux" du XML sont pris en compte comme élément rénovés.
+* corrections correspondance, ECS initial au fioul butane et propane
+
+V1.051
+--------
+* Ébauche de la feuille de route ménage.
+* Bug en cas de création de nouveau plancher haut ou bas
+* En cas de création d'un élément le libellé de l'élément ne s'affichait pas. 
+* Correction test étiquette dernière étape.
+
+
+V1.04
+--------
+* ApiFdr : utilisation des classes DPE du XML au lieu de les calculer à partir du cep et des émissions de GES
+* Utilisation des graphismes de l'étiquette DPE 2022
+* Arrondi inférieur pour l'affichage du CEP dans les étiquettes énergétique.
+* Utilisation de la bibliothèque DomPDF au lieu de TCPDF.
