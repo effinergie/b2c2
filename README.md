@@ -42,7 +42,7 @@ Pour l'hébergement du site :
 - Joomla
 
 Pour la génération de PDF : 
-- DOM PDF
+- DomPDF
 
 Pour la visualisation des fichiers sur la page de test de l'API : 
 - JSONViewer
