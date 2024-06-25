@@ -1,22 +1,20 @@
 <?php
-/***********************************************
-*
-*	Grille d'experimentation pour des travaux  
-*   BBC Compatible
-*
-************************************************/
 
-//require_once __DIR__.'/php/CMSEffiUtils.php';
+require_once __DIR__.'/php/apiFdrB2C2.php';		
 
 class routeApiExt {
 	protected $data;
 		
 	function extGenereFdr(){
-		require_once __DIR__.'/php/apiFdrB2C2.php';		
+		
 		$apiFdrB2C2 = new ApiFdrB2C2();
 		$data = $this->data['extGenereFdr'];
 		$res = $apiFdrB2C2->extGenereFdr($data);
-		echo json_encode($res);
+		
+		$this->logCall($apiFdrB2C2,$res);
+		if (is_array($res)){
+			echo json_encode($res);
+		}		
 		die;
 	}	
 	
@@ -33,7 +31,19 @@ class routeApiExt {
 		} 
 	}
 	
+	function logCall($apiFdrB2C2,$res){
+		$aLog = [
+			$_SERVER['REMOTE_ADDR'],
+			date('Ymd_H:i:s'),
+			baseB2C2::VERSION,
+			$apiFdrB2C2->getLogiciel(),
+			@$this->data['extGenereFdr']['typeRetour'],
+			@$res['status']
+		];
+		$sLog = implode("\t",$aLog)."\r\n";
 
+		file_put_contents(__DIR__.'/../../log/routeApiFdr_'.date("Ymd").'.log', $sLog, FILE_APPEND);
+	}
 	
 	
 }

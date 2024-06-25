@@ -1,10 +1,5 @@
 <?php
-/***********************************************
-*
-*	Grille d'experimentation pour des travaux  
-*   BBC Compatible
-*
-************************************************/
+
 
 require_once __DIR__.'/php/CMSEffiUtils.php';
 
@@ -174,20 +169,6 @@ class routeB2C2 {
 	
 	
 }
-/*
-require_once __DIR__.'/php/apiSolB2C2.php';
-$b = new apiSolB2C2();
-//$c = $b->chercheValeurTableau('typologieBatiment',['typoBat'=>'haussmanAv1948']);
-//print_r($c);
-//$c = $b->getColTableauValeur('departement','numDep',34,'zoneClim');
-//print_r($c);
-//$c = $b->getLigneTableauValeur2('departement','numDep',34555,'zoneClim');
-//print_r($c);
-
-$partSurf = $b->chercheValeurTableauCol('partSurfMurInt',['surf'=>'40'],'partSurf');
-print_r($partSurf);
-die;*/
-
 
 
 $routeb2c2 = new routeB2C2();

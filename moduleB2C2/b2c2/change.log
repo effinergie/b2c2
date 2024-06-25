@@ -1,8 +1,14 @@
+V1.08
+--------
+* Ajout Chauffage Gaz à Ventouse. 
+* Suppression du tableau des aides financières dans la sortie auditeurs(obsolète)
+* Ajout de logs pour l'appel de l'API
+
 V1.07
 --------
 * Modification du graphisme de le feuille de route
 * Test du Ubat à la dernière étape de travaux quand il est présent dans la XML
-* Suppression du tableau des aides financières (obsolète)
+
 
 
 V1.06
