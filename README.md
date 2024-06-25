@@ -1,6 +1,4 @@
-# b2c2
-
-## BBC par étapes
+# Projet BBC par étapes
 
 Le projet **BBC par étapes** est lauréat de l’appel à projet recherche de l’ADEME « Vers des Bâtiments Durables ». 
 
