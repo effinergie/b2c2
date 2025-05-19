@@ -64,8 +64,12 @@ class CthB2C2 extends FdrB2C2{
 		$this->trace('cth_conso() : $ges = $consoChauffage[ges] + $consoECS[ges] + $cepClim[ges] + $cepEclairage[ges] + $cepAuxEtVent[ges]; ');
 		$this->trace("cth_conso() : $ges = $consoChauffage[ges] + $consoECS[ges] + $cepClim[ges] + $cepEclairage[ges] + $cepAuxEtVent[ges]; ");
 		
+// pour test
+//		$cep = 389;
+//		$ges = 79;
+//		$this->jData['projet']['batiment']['altitude'] = 800;
+//		$this->jData['projet']['general']['departement'] = 34;
 		
-
 		$res = [
 				'cef'=>$cef,				
 				'cep'=>$cep,				
@@ -1819,13 +1823,15 @@ class CthB2C2 extends FdrB2C2{
 	
 	protected function cth_niveauDpeCep($cep){	
 		$altitude = $this->getAltitude();
-		$etiq = $this->chercheValeurTableauCol('dpeCep',['alt'=>$altitude,'cep'=>$cep],'classeCEP');
+		$zoneClim = $this->getZoneClim();
+		$etiq = $this->chercheValeurTableauCol('dpeCep',['zoneClim'=>$zoneClim,'alt'=>$altitude,'cep'=>$cep],'classeCEP');
 		return $etiq;
 	}
 	
 	protected function cth_niveauDpeGes($ges){
 		$altitude = $this->getAltitude();
-		$etiq = $this->chercheValeurTableauCol('dpeGes',['alt'=>$altitude,'ges'=>$ges],'classeGES');
+		$zoneClim = $this->getZoneClim();
+		$etiq = $this->chercheValeurTableauCol('dpeGes',['zoneClim'=>$zoneClim,'alt'=>$altitude,'ges'=>$ges],'classeGES');
 		return $etiq;
 	}	
 	

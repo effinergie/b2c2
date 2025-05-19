@@ -1,21 +1,11 @@
 body{
-	font-family:"DejaVu Sans";
 	font-size:12px;
 	line-height:12px;
 }
 
-img{
-	width:100%;
-}
 
-table{
-	width:100%;
-	border-collapse: collapse;
-}
 
-table.tabFdr{	
-	
-}
+
 
 .col{
 	vertical-align:top;
@@ -45,16 +35,6 @@ table.tabFdr{
 	width:30px;
 }
 
-.iconAndTextIcon{
-	vertical-align:top;
-	width:40px;
-}
-
-
-.iconAndTextText{
-	width:auto;
-}
-
 .imgDpe{
 	width:320px;
 }
@@ -64,18 +44,6 @@ table.tabFdr{
 	font-style: italic;
 }
 
-.warning{
-	color:#FF0000;
-}
-
-.warningApi{
-	text-align:center;
-	color:#FFFFFF;
-	font-weight:bold;
-	font-size:14px;					
-	line-height:20px;
-	background-color:#FF0000;
-}
 
 .dpeGes{
 	text-align:right;
@@ -162,35 +130,6 @@ table.tabFdr{
 	width:'.($this->bFdrEditeur ? 45 : 30).'%;
 }
 				
-/* header & footer */
-
-#header {
-	position: fixed;
-	top: -40px;
-	left: 0px;
-	right: 0px;
-	height: 50px;
-
-	/** Extra personal styles **/
-	/* background-color: #03a9f4; */
-	/*color: white;*/
-	/*text-align: center;*/
-	/*line-height: 35px;*/
-}
-
-#footer {
-	position: fixed; 
-	bottom: -55px; 
-	left: 0px; 
-	right: 0px;
-	height: 50px; 
-
-	/** Extra personal styles **/
-	/*background-color: #03a9f4;
-	color: white;
-	text-align: center;*/
-	/*line-height: 35px;*/
-}
 
 
 /*contournement rowspan et page break de domPDF*/

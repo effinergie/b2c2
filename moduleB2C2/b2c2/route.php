@@ -58,6 +58,7 @@ class routeB2C2 {
 		$apiSolB2C2 = new CthB2C2();
 		$data = $this->data['createPDF'];
 		$res = $apiSolB2C2->createPDF($data);
+		$this->logCall('createPDF');
 		die;
 	}
 	function createPDFMenages(){
@@ -65,6 +66,7 @@ class routeB2C2 {
 		$apiSolB2C2 = new CthB2C2();
 		$data = $this->data['createPDFMenages'];
 		$res = $apiSolB2C2->createPDFMenages($data);
+		$this->logCall('createPDFMenages');
 		die;
 	}
 	
@@ -73,6 +75,7 @@ class routeB2C2 {
 		$apiSolB2C2 = new CthB2C2();
 		$data = $this->data['genereFeuilleDeRoute'];
 		$res = $apiSolB2C2->genereFeuilleDeRoute($data );
+		$this->logCall('genereFeuilleDeRoute');
 		echo json_encode($res,JSON_PARTIAL_OUTPUT_ON_ERROR); //en cas de valeur NAN la chaine ne sort pas à blanc.
 		die;
 	}
@@ -165,7 +168,17 @@ class routeB2C2 {
 		}
 	}
 	
+	function logCall($typeAppel){
+		$aLog = [
+			$_SERVER['REMOTE_ADDR'],
+			date('Ymd_H:i:s'),
+			baseB2C2::VERSION,
+			$typeAppel
+		];
+		$sLog = implode("\t",$aLog)."\r\n";
 
+		file_put_contents(__DIR__.'/../../log/route_'.date("Ymd").'.log', $sLog, FILE_APPEND);
+	}
 	
 	
 }

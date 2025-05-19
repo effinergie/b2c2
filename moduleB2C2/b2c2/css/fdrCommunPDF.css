@@ -1,0 +1,125 @@
+
+@page{
+	margin:30px;
+}
+
+body{
+	margin-top:70px;
+	margin-bottom:40px;
+	font-family:"DejaVu Sans";
+	/*border:1px solid;*/
+}
+
+table{
+	width:100%;
+	border-collapse: collapse;
+}
+
+/*
+.pageBackGround{
+	background-color:#fcf3f6;
+	
+	position: absolute;
+	top: -10px;
+	left: -10px;
+	right: -10px;
+	bottom: -10px;
+	z-index:-10;
+}
+
+.pageBackGround.color{
+	position: fixed;
+}*/
+
+
+
+				
+/* header & footer */
+
+
+#header {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	height: 50px;
+}
+
+#footer {
+	position: fixed; 
+	bottom: -10px; 
+	left: -5px; 
+	right: -5px;
+	height: 50px; 
+	/*border:1px solid;*/
+}
+
+
+
+#headerLogo{
+	position:fixed;
+	left:-10px;
+	top:-5px;
+	height:60px;
+	width:auto;	
+}
+
+.footerLogo{
+	height:40px;
+	vertical-align:sub;
+	/*border:1px solid;*/
+}
+
+.footerLogo.Pouget{
+	margin-bottom:-3px;
+}
+.footerLogo.Effi{
+	height:25px;
+	margin-bottom:3px;
+	margin-right:5px;
+}
+.footerLogo.Ademe{
+	position:fixed;
+	right:10px;
+	/*top:-8px;*/
+	margine-left:10px;
+}
+
+
+#versionB2C2{
+	font-size:10px;
+	color:#AAAAAA;
+	font-style:italic;
+	display:inline;
+}
+
+/*blocs textes */
+
+
+
+
+.iconAndTextIcon{
+	vertical-align:top;
+	width:40px;
+}
+
+
+.iconAndTextText{
+	width:auto;
+}
+
+
+/* warning */
+
+.warning{
+	color:#FF0000;
+}
+
+.warningApi{
+	text-align:center;
+	color:#FFFFFF;
+	font-weight:bold;
+	font-size:14px;					
+	line-height:20px;
+	background-color:#FF0000;
+}

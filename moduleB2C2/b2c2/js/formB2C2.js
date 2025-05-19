@@ -553,7 +553,7 @@ var formB2C2 ={
 			},			
 			{
 				id:'surface',
-				type:'input',				
+				type:'number',				
 			},			
 			{
 				id:'mitoyen',
@@ -1333,7 +1333,7 @@ var formB2C2 ={
 	/********************************************************
 	* Affichage Solutions
 	*********************************************************/
-	
+
 	ajaxGenereSolutionsLot:function(nomLot){
 		this.effaceSolutionsLot(nomLot);
 				
@@ -1353,14 +1353,14 @@ var formB2C2 ={
 			
 		return;
 	},
-	
+
 	afficheResultatSolution:function(nomLot,jData){		
 		if (jData.solutions){
 			this.afficheSolutionsLots(nomLot,jData.solutions);
 			this.modeChoixSolutionLot(nomLot);
 		}
 	},
-	
+
 	afficheSolutionsLots:function(nomLot,jData){
 		var aSolutionsLots = jData[nomLot];
 		
@@ -1369,16 +1369,16 @@ var formB2C2 ={
 			this.ajouteSolutionLotsType(nomLot,iType,aSolutionsLotsType);
 		}
 	},
-	
+
 	ajouteSolutionLotsType:function(nomLot,iType,aSolutionsLotsType,idChoix){
 		let htmlSol = this.htmlSolutionsLotsType(nomLot,iType,aSolutionsLotsType,idChoix);
 		let jqTypeLot = this.getJqTypeLot(nomLot,iType).find('.solutionListe');
 		jqTypeLot.html('<div class="titreSolution">Solutions proposées :</div>' + htmlSol);
 		jqTypeLot.find('input[name^="solEcs_"]').on('change',()=>this.modeSaisieChauffageSiModifEcs(nomLot));
 	},
-	
-	htmlSolutionsLotsType:function(nomLot,iType,aSolutionsLotsType,idChoix){
 
+	htmlSolutionsLotsType:function(nomLot,iType,aSolutionsLotsType,idChoix){
+		
 		let htmlSol =  '';
 		let htmlEntete='';
 		let numSol = 0;

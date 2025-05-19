@@ -1,5 +1,5 @@
 -idSol,strucMur,typeIsoMur,>=perfMurInit_cVal,-resTypeIsoMur,-resCaracIsoMur,-resRevetExtMur,-resRecomMur
-1,*,*,"3,7",nonPrioritaire,,,
+1,*,*,"4,4",nonPrioritaire,,,
 2,beton,iti,*,"iti,fvp,hygro,fortSd",isoPermea,#initial,"deposeDoublage,doublageColleProscrit,isoLimitPontIti"
 3,beton,iti,*,ite,#toutType,ouvertVapeur,"possibConservIti,permeaNonAssuree,resExt2xSupInt,isoLimitPontIte"
 4,beton,ite,*,"iti,fvp,hygro,fortSd",isoPermea,#initial,"deposeDoublage,doublageColleProscrit,isoLimitPontIti"

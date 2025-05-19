@@ -2,7 +2,7 @@
 
 class baseB2C2{
 	
-	const VERSION = '1.08'; 
+	const VERSION = '1.14'; 
 	protected $listeValeur;
 	protected $listeTableauValeur=[];
 	protected $aWarning=[];
@@ -329,6 +329,10 @@ class baseB2C2{
 		return false;	
 	}
 	
+	public function getColTableauValeurId($nomTableau,$idCherche,$nomChampRetour){
+		return $this->getColTableauValeur($nomTableau,'id',$idCherche,$nomChampRetour);
+	}
+	
 	
 	public function getLigneTableauValeur($nomTableau,$nomCampId,$idCherche){
 		//on enlève le dieze au début si necessaire
@@ -494,7 +498,7 @@ class baseB2C2{
 		return $this->setResSatus($res,'ERROR');
 	}
 	
-	protected function setResSatus($res=[],$status){
+	protected function setResSatus($res,$status){
 		$res['status']=$status;
 		return $res;
 	}
@@ -505,7 +509,7 @@ class baseB2C2{
 		if (self::$bErrorToException) return;
 		self::$bErrorToException = true;
 		//Turning errors into exceptions
-		set_error_handler(function($errno, $errstr, $errfile, $errline, $errcontext) {
+		set_error_handler(function($errno, $errstr, $errfile = null, $errline = null, $errcontext = null) {
 			// error was suppressed with the @-operator
 			if (0 === error_reporting()) {
 				return false;

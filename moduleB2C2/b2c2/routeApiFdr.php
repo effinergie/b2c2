@@ -9,12 +9,19 @@ class routeApiExt {
 		
 		$apiFdrB2C2 = new ApiFdrB2C2();
 		$data = $this->data['extGenereFdr'];
+//$data['PDFtoString']= 1;
 		$res = $apiFdrB2C2->extGenereFdr($data);
 		
 		$this->logCall($apiFdrB2C2,$res);
 		if (is_array($res)){
 			echo json_encode($res);
-		}		
+		}	else {
+			if(strpos($res,'%PDF')===0){
+				//echo 1111;die;
+				header("Content-type:application/pdf");
+			}
+			echo $res;
+		}	
 		die;
 	}	
 	

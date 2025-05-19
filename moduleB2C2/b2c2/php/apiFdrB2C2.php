@@ -39,17 +39,17 @@ class ApiFdrB2c2 extends CthB2C2{
 		$sXml= str_replace('xsi:nil=','xsinil=',$sXml); //pour palier au bug de izuba
 		$xml = simplexml_load_string($sXml);										
 		
-		switch ($data['typeRetour']){
-			case 'recapTravauxXml':
-				return $this->recapTravauxXml($xml);
-				break;
-		}	
-
 		if (isset($data['enumScenario'])){
 			$this->enumScenario = intval($data['enumScenario']);
 			if ($this->enumScenario >5 OR $this->enumScenario <1 ){
 				trigger_error('Le paramètre "enumScenario" doit être compris entre 1 et 5.');
 			}
+		}
+				
+		switch ($data['typeRetour']){
+			case 'recapTravauxXml':
+				return $this->recapTravauxXml($xml);
+				break;
 		}
 
 		$this->parseDataGeneral($xml);
@@ -70,12 +70,12 @@ class ApiFdrB2c2 extends CthB2C2{
 		
 		$this->parseDataThermique($logement_collection);	
 		
-	
-		switch ($data['typeRetour']){
+		$this->bFdrAPI = true;
+		switch ($data['typeRetour']){			
 			case 'auditEditeurPdf':				
 			case 'auditProprietairePdf':			
 			case 'auditPdf':
-				switch ($data['typeRetour']){
+				switch ($data['typeRetour']){				
 					case 'auditEditeurPdf':				
 						$this->bFdrEditeur = true;
 						break;
@@ -103,7 +103,7 @@ class ApiFdrB2c2 extends CthB2C2{
 		//et met dans l'ordre des étapes les logementColleciton
 		
 		$this->maxEtapeExt = 0;//$this->get_maxNumeroEtape($xml);
-		$logement_collection = (@$xml->xpath('logement_collection/logement'));
+		$logement_collection = ($xml->xpath('logement_collection/logement') ?? '');
 		$logement_derniereEtape = '';
 		
 		//$nom_scenario = '';
@@ -114,7 +114,7 @@ class ApiFdrB2c2 extends CthB2C2{
 				$res[0] = $xmlLogement;
 			} else if ($this->get_enum_scenario_id($xmlLogement) == $this->enumScenario ){// 1:scénario multi étapes \"principal\
 							
-				$enum_etape_id = (int) @$xmlLogement->xpath('caracteristique_generale/enum_etape_id')[0];				
+				$enum_etape_id = (int) ($xmlLogement->xpath('caracteristique_generale/enum_etape_id')[0] ?? '');				
 				if ($enum_etape_id == 2 ){ //derniere Etape					
 					$logement_derniereEtape = $xmlLogement; //on affectera la dernière étape au bon endroid du tableau à la fin
 					$listeRef_derniereEtape = $this->getListeRefTravaux($xmlLogement);
@@ -144,8 +144,6 @@ class ApiFdrB2c2 extends CthB2C2{
 	}
 	
 
-	
-	
 	
 	
 	function recapTravauxXml($xml){
@@ -194,13 +192,13 @@ class ApiFdrB2c2 extends CthB2C2{
 		$res = [];
 		foreach ($logement_collection as $xmlLogement){
 			$etape = $this->get_numeroEtape($xmlLogement);
-			$aTravaux = @$xmlLogement->xpath('etape_travaux/travaux_collection/travaux');
+			$aTravaux = ($xmlLogement->xpath('etape_travaux/travaux_collection/travaux') ?? '');
 			$aLstTrav = [];
 			
 			foreach ($aTravaux as $xmlTravaux){
 				$detailTrav = '';
-				$detailTrav .= @$aCorLot[(string) @$xmlTravaux->xpath('enum_lot_travaux_audit_id')[0]] . ' - ';
-				$detailTrav .= @$aCorTrav[(string) @$xmlTravaux->xpath('enum_type_travaux_id')[0]] . ' - ';
+				$detailTrav .= ($aCorLot[(string) ($xmlTravaux->xpath('enum_lot_travaux_audit_id')[0] ?? '')] ?? '') . ' - ';
+				$detailTrav .= ($aCorTrav[(string) ($xmlTravaux->xpath('enum_type_travaux_id')[0] ?? '')] ?? '') . ' - ';
 				$aDesc = $xmlTravaux->xpath('description_travaux_collection/description_travaux/description');
 				foreach ($aDesc as $xmlDesc){
 					$detailTrav .= '||'. (string) $xmlDesc ;
@@ -245,51 +243,51 @@ class ApiFdrB2c2 extends CthB2C2{
 			if ($this->estEtatInitial($xmlLogement) OR $this->get_enum_scenario_id($xmlLogement)==$this->enumScenario ){//0:etat intial,	
 				$numEtape = $this->get_numeroEtape($xmlLogement);
 				
-				$surf = (float) @$xmlLogement->xpath('sortie/ep_conso/ep_conso_5_usages')[0] / (float) @$xmlLogement->xpath('sortie/ep_conso/ep_conso_5_usages_m2')[0];
+				$surf = (float) $xmlLogement->xpath('sortie/ep_conso/ep_conso_5_usages')[0] / (float) ($xmlLogement->xpath('sortie/ep_conso/ep_conso_5_usages_m2')[0] ?? '');
 				
 				$calcThXmlAudit['etape'][$numEtape]['consoTotal'] = [
-					'cef'=> (float) @$xmlLogement->xpath('sortie/ef_conso/conso_5_usages')[0]/$surf ,
-					'cep'=> (float) @$xmlLogement->xpath('sortie/ep_conso/ep_conso_5_usages')[0]/$surf ,
-					'ges'=> (float) @$xmlLogement->xpath('sortie/emission_ges/emission_ges_5_usages')[0]/$surf,
-					'classeDpe'=> (string) @$xmlLogement->xpath('sortie/ep_conso/classe_bilan_dpe')[0],
-					'classeGes'=> (string) @$xmlLogement->xpath('sortie/emission_ges/classe_emission_ges')[0]
+					'cef'=> (float) ($xmlLogement->xpath('sortie/ef_conso/conso_5_usages')[0] ?? '')/$surf ,
+					'cep'=> (float) ($xmlLogement->xpath('sortie/ep_conso/ep_conso_5_usages')[0] ?? '')/$surf ,
+					'ges'=> (float) ($xmlLogement->xpath('sortie/emission_ges/emission_ges_5_usages')[0] ?? '')/$surf,
+					'classeDpe'=> (string) ($xmlLogement->xpath('sortie/ep_conso/classe_bilan_dpe')[0] ?? ''),
+					'classeGes'=> (string) ($xmlLogement->xpath('sortie/emission_ges/classe_emission_ges')[0] ?? '')
 					];
 					
 				$calcThXmlAudit['etape'][$numEtape]['consoLot'] =[
 						"chauffage"=>[
-							'cef'=> (float) @$xmlLogement->xpath('sortie/ef_conso/conso_ch')[0]/$surf,
-							'cep'=> (float) @$xmlLogement->xpath('sortie/ep_conso/ep_conso_ch')[0]/$surf,
-							'ges'=> (float) @$xmlLogement->xpath('sortie/emission_ges/emission_ges_ch')[0]/$surf,
-							'cout'=> (float) @$xmlLogement->xpath('sortie/cout/cout_ch')[0]/$surf,
+							'cef'=> (float) ($xmlLogement->xpath('sortie/ef_conso/conso_ch')[0] ?? '')/$surf,
+							'cep'=> (float) ($xmlLogement->xpath('sortie/ep_conso/ep_conso_ch')[0] ?? '')/$surf,
+							'ges'=> (float) ($xmlLogement->xpath('sortie/emission_ges/emission_ges_ch')[0] ?? '')/$surf,
+							'cout'=> (float) ($xmlLogement->xpath('sortie/cout/cout_ch')[0] ?? '')/$surf,
 						],
 						"ecs"=>[
-							'cef'=> (float) @$xmlLogement->xpath('sortie/ef_conso/conso_ecs')[0]/$surf,
-							'cep'=> (float) @$xmlLogement->xpath('sortie/ep_conso/ep_conso_ecs')[0]/$surf,
-							'ges'=> (float) @$xmlLogement->xpath('sortie/emission_ges/emission_ges_ecs')[0]/$surf,
-							'cout'=> (float) @$xmlLogement->xpath('sortie/cout/cout_ecs')[0]/$surf,
+							'cef'=> (float) ($xmlLogement->xpath('sortie/ef_conso/conso_ecs')[0] ?? '')/$surf,
+							'cep'=> (float) ($xmlLogement->xpath('sortie/ep_conso/ep_conso_ecs')[0] ?? '')/$surf,
+							'ges'=> (float) ($xmlLogement->xpath('sortie/emission_ges/emission_ges_ecs')[0] ?? '')/$surf,
+							'cout'=> (float) ($xmlLogement->xpath('sortie/cout/cout_ecs')[0] ?? '')/$surf,
 						],
 						"clim"=>[
-							'cef'=> (float) @$xmlLogement->xpath('sortie/ef_conso/conso_fr')[0]/$surf,
-							'cep'=> (float) @$xmlLogement->xpath('sortie/ep_conso/ep_conso_fr')[0]/$surf,
-							'ges'=> (float) @$xmlLogement->xpath('sortie/emission_ges/emission_ges_fr')[0]/$surf,
-							'cout'=> (float) @$xmlLogement->xpath('sortie/cout/cout_fr')[0]/$surf,
+							'cef'=> (float) ($xmlLogement->xpath('sortie/ef_conso/conso_fr')[0] ?? '')/$surf,
+							'cep'=> (float) ($xmlLogement->xpath('sortie/ep_conso/ep_conso_fr')[0] ?? '')/$surf,
+							'ges'=> (float) ($xmlLogement->xpath('sortie/emission_ges/emission_ges_fr')[0] ?? '')/$surf,
+							'cout'=> (float) ($xmlLogement->xpath('sortie/cout/cout_fr')[0] ?? '')/$surf,
 						],
 						"eclairage"=>[
-							'cef'=> (float) @$xmlLogement->xpath('sortie/ef_conso/conso_eclairage')[0]/$surf,
-							'cep'=> (float) @$xmlLogement->xpath('sortie/ep_conso/ep_conso_eclairage')[0]/$surf,
-							'ges'=> (float) @$xmlLogement->xpath('sortie/emission_ges/emission_ges_eclairage')[0]/$surf,
-							'cout'=> (float) @$xmlLogement->xpath('sortie/cout/cout_eclairage')[0]/$surf,
+							'cef'=> (float) ($xmlLogement->xpath('sortie/ef_conso/conso_eclairage')[0] ?? '')/$surf,
+							'cep'=> (float) ($xmlLogement->xpath('sortie/ep_conso/ep_conso_eclairage')[0] ?? '')/$surf,
+							'ges'=> (float) ($xmlLogement->xpath('sortie/emission_ges/emission_ges_eclairage')[0] ?? '')/$surf,
+							'cout'=> (float) ($xmlLogement->xpath('sortie/cout/cout_eclairage')[0] ?? '')/$surf,
 						],
 						"auxetvent"=>[
-							'cef'=> (float) @$xmlLogement->xpath('sortie/ef_conso/conso_totale_auxiliaire')[0]/$surf,
-							'cep'=> (float) @$xmlLogement->xpath('sortie/ep_conso/ep_conso_totale_auxiliaire')[0]/$surf,
-							'ges'=> (float) @$xmlLogement->xpath('sortie/emission_ges/emission_ges_totale_auxiliaire')[0]/$surf,
-							'cout'=> (float) @$xmlLogement->xpath('sortie/cout/cout_total_auxiliaire')[0]/$surf,
+							'cef'=> (float) ($xmlLogement->xpath('sortie/ef_conso/conso_totale_auxiliaire')[0] ?? '')/$surf,
+							'cep'=> (float) ($xmlLogement->xpath('sortie/ep_conso/ep_conso_totale_auxiliaire')[0] ?? '')/$surf,
+							'ges'=> (float) ($xmlLogement->xpath('sortie/emission_ges/emission_ges_totale_auxiliaire')[0] ?? '')/$surf,
+							'cout'=> (float) ($xmlLogement->xpath('sortie/cout/cout_total_auxiliaire')[0] ?? '')/$surf,
 						]
 					];	
 				$calcThXmlAudit['etape'][$numEtape]['ubat'] = [
-					'ubat'=> (float) @$xmlLogement->xpath('sortie/qualite_isolation/ubat')[0],
-					'ubatBase'=> (float) @$xmlLogement->xpath('sortie/qualite_isolation/ubat_base')[0]
+					'ubat'=> (float) ($xmlLogement->xpath('sortie/qualite_isolation/ubat')[0] ?? ''),
+					'ubatBase'=> (float) ($xmlLogement->xpath('sortie/qualite_isolation/ubat_base')[0] ?? '')
 					];
 			}
 		}
@@ -312,7 +310,7 @@ class ApiFdrB2c2 extends CthB2C2{
 		"3": "étape intermédiaire 1",
 		"4": "étape intermédiaire 2",
 		"5": "étape intermédiaire 3"		*/
-		$enum_etape_id = (int) @$xmlLogement->xpath('caracteristique_generale/enum_etape_id')[0];
+		$enum_etape_id = (int) ($xmlLogement->xpath('caracteristique_generale/enum_etape_id')[0] ?? '');
 		if ($enum_etape_id>=3){
 			return $enum_etape_id -1;
 		}
@@ -325,12 +323,12 @@ class ApiFdrB2c2 extends CthB2C2{
 	
 	
 	protected function get_enum_scenario_id ($xmlLogement){	
-		return @$xmlLogement->xpath('caracteristique_generale/enum_scenario_id')[0];
+		return ($xmlLogement->xpath('caracteristique_generale/enum_scenario_id')[0] ?? '');
 	}	
 	
 	protected function estEtatInitial($xmlLogement){	
 		$enum_scenario_id = $this->get_enum_scenario_id($xmlLogement);
-		$enum_etape_id =  @$xmlLogement->xpath('caracteristique_generale/enum_etape_id')[0];
+		$enum_etape_id =  ($xmlLogement->xpath('caracteristique_generale/enum_etape_id')[0] ?? '');
 
 		return $enum_scenario_id==0 OR $enum_etape_id==0 /*OR $pasDeTravaux*/;
 	}
@@ -351,7 +349,7 @@ class ApiFdrB2c2 extends CthB2C2{
 	protected function affecteSolutionLotNonTraite($nomLot){
 	$alot = &$this->jData['projet']['lstLot'][$nomLot];
 		foreach($alot as $nLot=>&$typeLot){
-			unset($typeLot['existant']['reference']);
+			unset($typeLot['existant']['cleLot']);
 			if (!$typeLot['existant']['designLot']) $typeLot['existant']['designLot'] = $this->getValChamp('lstLot',$nomLot);
 			if (!isset($typeLot['existant']['idSol'])){		
 				$sol = $this->getSolutionLotNonTraite($nomLot);
@@ -389,11 +387,11 @@ class ApiFdrB2c2 extends CthB2C2{
 	}
 	
 	/************************************************
-	*  REFERENCE
+	*  CLEs LOT et REFFERENCE
 	************************************************/
 	
 
-	protected $aReferenceLibre= [];
+	protected $aCleLotLibre= [];
 	
 	protected function deleteNode(&$xmlLot,$nomBaliseASupprimer){
 		$balisesASupprimer = $xmlLot->xpath("//$nomBaliseASupprimer");
@@ -419,7 +417,7 @@ class ApiFdrB2c2 extends CthB2C2{
 		$this->aNomChampApiExt = array_keys($aChampsXmlUtilises);
 	}
 	
-	protected function getReference($nomLot,$xmlLot){		
+	protected function getCleLot($nomLot,$xmlLot){		
 		// calcule la référence du lot à partir du xml du lot.
 		
 		$xmlLotCopie = $this->simpleXMLClone($xmlLot); //copie car sinon Xpath chèrche aussi dans les neuds parents , donc dant le fichier xml complet
@@ -427,57 +425,57 @@ class ApiFdrB2c2 extends CthB2C2{
 		foreach ($this->aNomChampApiExt as $nomChamp){
 			$aVal = $xmlLotCopie->xpath("//$nomChamp");
 			foreach ($aVal as $val){
-				$aValToCompare[$nomChamp] = (string) @$val;
+				$aValToCompare[$nomChamp] = (string) $val;
 			}
 		}		
 		
-		$ref = json_encode($aValToCompare);
+		$cleLot = json_encode($aValToCompare);
 		
-		$label = implode(' - ',array_map('trim',@$xmlLotCopie->xpath('//description')));
+		$label = implode(' - ',array_map('trim',$xmlLotCopie->xpath('//description') ?? ''));
 		
-		if (!isset($this->aCorrespRefLib[$ref])) {
-			$this->aCorrespRefLib[$ref] = [];
+		if (!isset($this->aCorrespRefLib[$cleLot])) {
+			$this->aCorrespRefLib[$cleLot] = [];
 		}
-		$this->aCorrespRefLib[$ref][] = $label;
+		$this->aCorrespRefLib[$cleLot][] = $label;
 				
-		return $ref;
+		return $cleLot;
 	}
 	
-	protected function getLibelleFromReference($ref){		
-		return implode(' || ',array_unique($this->aCorrespRefLib[$ref]));
+	protected function getLibelleFromCleLot($cleLot){		
+		return implode(' || ',array_unique($this->aCorrespRefLib[$cleLot]));
 	}
 	
-	protected function getValXmlFromReference($ref){
-		return json_decode($ref,true);
+	protected function getValXmlFromCleLot($cleLot){
+		return json_decode($cleLot,true);
 	}
 
 
-	protected function &getListesReferencesInit($nomLot){
+	protected function &getListesCleLotInit($nomLot){
 		$listeRef = [];
 		foreach ($this->jData['projet']['lstLot'][$nomLot] as &$typeLot){
-			$ref = $typeLot['existant']['reference'];
-			$listeRef[$ref][] = &$typeLot;
+			$cleLot = $typeLot['existant']['cleLot'];
+			$listeRef[$cleLot][] = &$typeLot;
 		}
 		return $listeRef;
 	}
 	
 	protected function prepareLotsATraiter($nomLot,$aLot,$etape){
 
-		$aRefLibres = &$this->getListesReferencesInit($nomLot);
+		$aCleLotLibres = &$this->getListesCleLotInit($nomLot);
 
 		$aXmlLotATraiter = [];	
 	
-		//vérifie si les référence sont bien présente dans le tableau des références initiales
-		// pour obtenir une liste des références non présentes (c.a.d. libres pour y faire correspondre l'élément rénové)
+		//vérifie si les "Clés Lot" sont bien présente dans le tableau des "ClésLot" initiales
+		// pour obtenir une liste des "Clés Lot" non présentes (c.a.d. libres pour y faire correspondre l'élément rénové)
 		foreach ($aLot as $numLot=>$xmlLot){
 			
-			//on cherche si la référence existe dans les étapes précédentes. 
-			//Si elle existe c'est que l'élément n'a pas été modifié. sinon, il faut considéréer l'élément comme rénové.
-			if (!$this->refLibreExiste($nomLot,$xmlLot,$aRefLibres,$etape)){
-				$enum_etat_composant_id = (string) @$xmlLot->xpath('donnee_entree/enum_etat_composant_id')[0];
+			//on cherche si la "Clé Lot" existe dans les étapes précédentes. 
+			//Si elle existe c'est que l'élément n'a pas été modifié. sinon, il faut considérer l'élément comme rénové.
+			if ($this->cleLotLibreATraiter($nomLot,$xmlLot,$aCleLotLibres,$etape)){
+				$enum_etat_composant_id = (string) ($xmlLot->xpath('donnee_entree/enum_etat_composant_id')[0] ?? '');
 				if ($enum_etat_composant_id != 2){
-					$ref = $this->getReference($nomLot,$xmlLot);
-					$this->warning("Pour le lot '$nomLot' l'élément '".$this->getLibelleFromReference($ref)."' a été modifié à l'étape n°$etape, mais le champ 'enum_etat_composant_id' est different de 2 ");
+					$ref = $this->getCleLot($nomLot,$xmlLot);
+					$this->warning("Pour le lot '$nomLot' l'élément '".$this->getLibelleFromCleLot($ref)."' a été modifié à l'étape n°$etape, mais le champ 'enum_etat_composant_id' est different de 2 ");
 				} 
 				
 				$aXmlLotATraiter[] = $xmlLot;
@@ -486,23 +484,23 @@ class ApiFdrB2c2 extends CthB2C2{
 
 
 
-		$this->aReferenceLibre[$nomLot][$etape] = &$aRefLibres;
+		$this->aCleLotLibre[$nomLot][$etape] = &$aCleLotLibres;
 
-		foreach ($this->aReferenceLibre[$nomLot][$etape] as &$aTypeLot){
+		foreach ($this->aCleLotLibre[$nomLot][$etape] as &$aTypeLot){
 			foreach ($aTypeLot as &$typeLot){
 				// vérifie que dans les libres il n'y ait pas dejà des lots ou on a déja trouvé des solutions : 
 				// si l'étape est déjà défini alors on ne traite pas l'info car on a déjà choisis une solution les étapes précédentes.
 				if (isset($typeLot['existant']['etape'])){
-					$ref = $typeLot['existant']['reference'];
+					$ref = $typeLot['existant']['cleLot'];
 					
 					if (!isset($typeLot['existant']['etapeSupprime']) AND !$this->isTypeLotElementSupprime($typeLot) ){ //si pas déjà suppimé
 						if (!empty($this->bDebugApi)){								
-							$this->warning("Pour le lot '$nomLot' l'élément '".$this->getLibelleFromReference($ref)."' a été traité à une étape précédente mais n'est plus présent à l'etape n°$etape");
+							$this->warning("Pour le lot '$nomLot' l'élément '".$this->getLibelleFromCleLot($ref)."' a été traité à une étape précédente mais n'est plus présent à l'etape n°$etape");
 						}
 						//on dit que l'étélément sera suprimé à l'étape en question
 						$typeLot['existant']['etapeSupprime'] = $etape;
 					}
-					$this->unsetRefLibre($aRefLibres,$ref);
+					$this->unsetCleLotLibre($aCleLotLibres,$ref);
 				}
 			}			
 		}	
@@ -512,6 +510,30 @@ class ApiFdrB2c2 extends CthB2C2{
 	
 		
 	protected function ajoutRobinetTh($valXmlAvant,$valXmlApres){
+		//renvoie vrai si il y avait des radiateurs à eau avant et après. 
+		//pour le cas où on conserve la charretier branchée à des radiateurs, l’outil B2c2 ne considère pas ça comme des travaux.
+		$aRadiateurEau = [
+			24,28,
+			25,29,
+			26,30,
+			27,31,
+			32,36,
+			33,37,
+			34,38,
+			35,39
+		];
+		
+		if (
+			in_array($valXmlAvant['enum_type_emission_distribution_id'],$aRadiateurEau )
+			OR 
+			in_array($valXmlApres['enum_type_emission_distribution_id'],$aRadiateurEau )
+			){
+			return true;
+		}
+		return false ;
+		/*
+		Ancien fonctionnement ne concernait que les robinets thermostatiques. 
+		Mais il ne traitait pas les cas ou juste un système de régulation était mis en place
 		//liste des enum correspondants à des robinets thermostatiques , avant et après travaux
 		$aCoupleAvecSansRobinetsTh = [
 			[24,28],
@@ -534,60 +556,68 @@ class ApiFdrB2c2 extends CthB2C2{
 			
 		}
 		return false;
+		*/
 	}
-	protected function refLibreExiste($nomLot,$xmlLot,&$aRefLibres,$etape){
-		//renvoie vrai si on trouve la référence du lot à l'état initial		
-		$refLot = $this->getReference($nomLot,$xmlLot);
+	
+	protected function cleLotLibreATraiter($nomLot,$xmlLot,&$aCleLotLibres,$etape){
+		//renvoie Vrai si le lot est à traiter
+		$refLot = $this->getCleLot($nomLot,$xmlLot);
 		
 		//Cas particuliers où on ne change que les robinets thermostatiques
-		if 	($nomLot=="chauffage"){
-			
-			
-			$valXmlLot = $this->getValXmlFromReference($refLot);
-			foreach($aRefLibres as $refLibre=>$val){
-				$valXmlLibre = $this->getValXmlFromReference($refLibre);
+		if 	($nomLot=="chauffage"){			
+			$valXmlLot = $this->getValXmlFromCleLot($refLot);
+			foreach($aCleLotLibres as $refLibre=>$val){
+				$valXmlLibre = $this->getValXmlFromCleLot($refLibre);
 				
-				//si le générateur de change pas et que l'emmetteur de 'sans robinets thermostatiques' à 'avec';
+				//si le générateur ne change pas et que l'émetteur passe de 'sans robinets thermostatiques' à 'avec';
+				// alors on ne considère pas que le chauffage a été traité
 				if ($valXmlLot['enum_type_generateur_ch_id'] == $valXmlLibre['enum_type_generateur_ch_id']
 					AND
 						$this->ajoutRobinetTh($valXmlLibre,$valXmlLot)
 					){
-					$this->unsetRefLibre($aRefLibres,$refLibre);	
-					return true;				
+					$this->unsetCleLotLibre($aCleLotLibres,$refLibre);	
+					return false;				
 				}		
 			}
 		}	
+	
 		
-		//cas classique 
-		if (isset($aRefLibres[$refLot])){
-			$this->unsetRefLibre($aRefLibres,$refLot);
-			return true;
-		}		
+		//si la "Clé Lot" existe dans les étapes précédentes. alors le lot n'a pas changé donc pas à traiter
+		//plus utile car maintenant on ne se base que sur la liste des travaux
+	/*	if (isset($aCleLotLibres[$refLot])){
+			$this->unsetCleLotLibre($aCleLotLibres,$refLot);
+			return false;
+		}	*/	
 
 		// si le lot ne fait pas partie de la liste des travaux alors on ne le traite pas.
 		if (! $this->xmlLotEstDansListeTravaux($xmlLot,$etape)){
-			if (!empty($this->bDebugApi)){
-				$this->warning("Pour le lot '$nomLot' à l'étape n°$etape, l'élément '". @$xmlLot->xpath('donnee_entree/description')[0]/*$this->getLibelleFromReference($refLot)*/
-							."' n'est pas référencé dans la liste de travaux");
+			if (isset($aCleLotLibres[$refLot])){
+				$this->unsetCleLotLibre($aCleLotLibres,$refLot);
+			} else {
+				if (!empty($this->bDebugApi)){				
+					$this->warning("Pour le lot '$nomLot' à l'étape n°$etape, l'élément '". ($xmlLot->xpath('donnee_entree/description')[0] ?? '')/*$this->getLibelleFromCleLot($refLot)*/
+							."' a été modifié mais n'est pas référencé dans la liste de travaux");
+				}
 			}
-			return true;
+			
+			return false;
 		}	
 	
-		return false;
+		return true;
 	}
 		
-	protected function getReferenceLibre($nomLot,$xmlLot,$etape){
-		$aRefLibres = &$this->aReferenceLibre[$nomLot][$etape];
+	protected function getCleLotLibre($nomLot,$xmlLot,$etape){
+		$aCleLotLibres = &$this->aCleLotLibre[$nomLot][$etape];
 	
-		if (count($aRefLibres)==0){		
-			//si on a pas trouvé de référence Libre, alors on crée un lot 'inexistant' à l'etat init
+		if (count($aCleLotLibres)==0){		
+			//si on a pas trouvé de 'Clé Lot' Libre, alors on crée un lot 'inexistant' à l'etat init
 			if (!empty($this->bDebugApi)){
 				$this->warning("Il y a plus de lots '$nomLot' à l'étape n°$etape qu'à l'etat initial. Un élément 'inexistant' a été créé à l'etat initial pour le lot '$nomLot' ");
 			}
-			$newRef = $this->getReference($nomLot,$xmlLot,$etape);			
+			$newRef = $this->getCleLot($nomLot,$xmlLot,$etape);			
 			$newlot = [];
 			$newlot['existant']['designLot'] = '';
-			$newlot['existant']['reference'] = $newRef;	
+			$newlot['existant']['cleLot'] = $newRef;	
 			$newlot['existant']['inexistant'] = 1;	
 			if ($nomLot == 'menuiserie'){
 				$newlot['existant']['surfMenuiserie'] = 0;		
@@ -598,23 +628,23 @@ class ApiFdrB2c2 extends CthB2C2{
 			return $newRef;
 		}
 		
-		reset($aRefLibres);
-		$referenceLibre = key($aRefLibres);
+		reset($aCleLotLibres);
+		$cleLotLibre = key($aCleLotLibres);
 		
-		$this->unsetRefLibre($aRefLibres,$referenceLibre);
-		return $referenceLibre;
+		$this->unsetCleLotLibre($aCleLotLibres,$cleLotLibre);
+		return $cleLotLibre;
 	}
 	
-	protected function unsetRefLibre(&$aRefLibres,$ref){
+	protected function unsetCleLotLibre(&$aCleLotLibres,$ref){
 		
-		array_shift($aRefLibres[$ref]);
-		if (count($aRefLibres[$ref]) == 0){
-			unset($aRefLibres[$ref]);
+		array_shift($aCleLotLibres[$ref]);
+		if (count($aCleLotLibres[$ref]) == 0){
+			unset($aCleLotLibres[$ref]);
 		}
 	}
 	
 	protected function chercheLotSupprimes($nomLot,$etape){			
-		foreach ($this->aReferenceLibre[$nomLot][$etape] as &$aTypeLot){
+		foreach ($this->aCleLotLibre[$nomLot][$etape] as &$aTypeLot){
 			foreach ($aTypeLot as &$typeLot){
 				//pour tous les lots non utilisés, créér une solution 'lot supprimé'
 				$idSol="998";
@@ -632,20 +662,20 @@ class ApiFdrB2c2 extends CthB2C2{
 	
 	protected function &getLotInitalCorrespondant($nomLot,$xmlLot,$etape){	
 	
-		$reference = $this->getReferenceLibre($nomLot,$xmlLot,$etape);
+		$cleLot = $this->getCleLotLibre($nomLot,$xmlLot,$etape);
 
 		$aLot = &$this->jData['projet']['lstLot'][$nomLot];		
 		
 		foreach ($aLot as $numLot=>&$lot){		
 							
-			if ($lot['existant']['reference'] == $reference){	
-				$newRef = $this->getReference($nomLot,$xmlLot,$etape);
-				$lot['existant']['reference'] = $newRef;//on remplace la référence à l'état initial par la référtence du lot rénové pour pouvoir le retrouver aux étapes ultérieures.
+			if ($lot['existant']['cleLot'] == $cleLot){	
+				$newRef = $this->getCleLot($nomLot,$xmlLot,$etape);
+				$lot['existant']['cleLot'] = $newRef;//on remplace la référence à l'état initial par la référtence du lot rénové pour pouvoir le retrouver aux étapes ultérieures.
 				return $lot;
 			}		
 		}
 		
-		trigger_error("impossible de trouver le lot $nomLot ayant la référence '$reference' dans l'état initial.");
+		trigger_error("impossible de trouver le lot $nomLot ayant la référence '$cleLot' dans l'état initial.");
 		
 		
 	}
@@ -682,29 +712,58 @@ class ApiFdrB2c2 extends CthB2C2{
 			$typeLot['existant']['idSol'] = $idSol;
 			
 			if (!empty($this->bDebugApi)){
-				$this->warning($libSolutionNonRecommandee." pour le lot $nomLot : ".$this->getLibelleFromReference($typeLot['existant']['reference']),print_r($solutionExt,true).print_r($aSolLot,true));
+				$this->warning($libSolutionNonRecommandee." pour le lot $nomLot : ".$this->getLibelleFromCleLot($typeLot['existant']['cleLot']),print_r($solutionExt,true).print_r($aSolLot,true));
 			}
 		}
 	}
 	
-	
-	protected function xmlLotEstDansListeTravaux($xmlLot,$etape){		
+	protected function xmlLotGetRefListeTravaux($xmlLot){
+		//renvoie la liste des références du lot (il peut y en avoir plusieurs dans le cas du chauffage par exemeple... ref emeteur, ref générateur...)
 		$aRefXml = [] ;
-		$aRefXml[] = (string) @$xmlLot->xpath('donnee_entree/reference')[0];
+		$aRefXml[] = (string) ($xmlLot->xpath('donnee_entree/reference')[0] ?? '');
 		
-		//ref générateur emmeteur
+		//ref générateur émetteur
 		$aRefAux = $xmlLot->xpath('generateur_chauffage_collection/generateur_chauffage/donnee_entree/reference');
 		foreach ($aRefAux as $refAux){
-			$aRefXml[] = (string) @$refAux;
+			$aRefXml[] = (string) $refAux;
 		}
+		
 		$aRefAux = $xmlLot->xpath('emetteur_chauffage_collection/emetteur_chauffage/donnee_entree/reference');
 		foreach ($aRefAux as $refAux){
-			$aRefXml[] = (string) @$refAux;
+			$aRefXml[] = (string) $refAux;
 		}
 		$aRefAux = $xmlLot->xpath('generateur_ecs_collection/generateur_ecs/donnee_entree/reference');
 		foreach ($aRefAux as $refAux){
-			$aRefXml[] = (string) @$refAux;
+			$aRefXml[] = (string) $refAux;
 		}
+		
+		//référence des générateurs mixtes
+		$aRefAux = $xmlLot->xpath('generateur_chauffage_collection/generateur_chauffage/donnee_entree/reference_generateur_mixte');
+		foreach ($aRefAux as $refAux){
+			$aRefXml[] = (string) $refAux;
+		}
+		$aRefAux = $xmlLot->xpath('generateur_ecs_collection/generateur_ecs/donnee_entree/reference_generateur_mixte');
+		foreach ($aRefAux as $refAux){
+			$aRefXml[] = (string) $refAux;
+		}			
+		
+		return $aRefXml;
+	}	
+	
+	protected function xmlLotGetTypeTravaux($xmlLot,$etape){		
+		$res = [];
+		$aRefXml = $this->xmlLotGetRefListeTravaux($xmlLot);
+		
+		foreach ($aRefXml as $refXML){
+			if ($refXML AND isset($this->aListeRefTravaux[$etape][$refXML]['enum_type_travaux_id'])){
+				$res[] = $this->aListeRefTravaux[$etape][$refXML]['enum_type_travaux_id'];
+			}
+		}
+		return $res;
+	}
+	
+	protected function xmlLotEstDansListeTravaux($xmlLot,$etape){		
+		$aRefXml = $this->xmlLotGetRefListeTravaux($xmlLot);
 		
 		foreach ($aRefXml as $refXML){
 			if ($refXML AND isset($this->aListeRefTravaux[$etape][$refXML])){
@@ -716,11 +775,19 @@ class ApiFdrB2c2 extends CthB2C2{
 
 	protected function getListeRefTravaux($xmlLogement){
 		$res = [];
-		$aReference = @$xmlLogement->xpath('etape_travaux/travaux_collection/travaux/reference_collection/reference');
 		
-		foreach ($aReference as $ref){
-			$res[(string) $ref]	= 1;
+		$aTravaux = ($xmlLogement->xpath('etape_travaux/travaux_collection/travaux') ?? '');
+		foreach ($aTravaux as $travaux){
+			$aReference = ($travaux->xpath('reference_collection/reference') ?? '');
+			$enum_type_travaux_id = (string) ($travaux->xpath('enum_type_travaux_id')[0] ?? '');
+			$infoTravaux = [
+				'enum_type_travaux_id' => $enum_type_travaux_id
+				];
+			foreach ($aReference as $ref){
+				$res[(string) $ref]	= $infoTravaux;
+			}
 		}
+	
 		return $res;
 	}	
 	
@@ -759,22 +826,22 @@ class ApiFdrB2c2 extends CthB2C2{
 	protected function parseDataGeneral($xml){
 		$res = [];
 		//data[genereSolutions][projet][general][id]: 
-		//$res['nomProjet'] = (string) (@$xml->xpath('administratif/nom_proprietaire')[0]);
-		$res['nomProjet'] = (string) (@$xml->xpath('numero_audit')[0]);
+		//$res['nomProjet'] = (string) ($xml->xpath('administratif/nom_proprietaire')[0] ?? '');
+		$res['nomProjet'] = (string) ($xml->xpath('numero_audit')[0] ?? '');
 		if (!$res['nomProjet']){
-			$res['nomProjet'] = (string) (@$xml->xpath('administratif/numero_dpe')[0]);
+			$res['nomProjet'] = (string) ($xml->xpath('administratif/numero_dpe')[0] ?? '');
 		}
 		
-		$res['logiciel'] = (string) (@$xml->xpath('/audit/administratif/auditeur/version_logiciel')[0]);
-		$res['logiciel'] .= '|'.(string) (@$xml->xpath('/audit/administratif/auditeur/version_moteur_calcul')[0]);
-		$res['logiciel'] .= '|'.(string) (@$xml->xpath('/audit/administratif/auditeur/usr_logiciel_id')[0]);
+		$res['logiciel'] = (string) ($xml->xpath('/audit/administratif/auditeur/version_logiciel')[0] ?? '');
+		$res['logiciel'] .= '|'.(string) ($xml->xpath('/audit/administratif/auditeur/version_moteur_calcul')[0] ?? '');
+		$res['logiciel'] .= '|'.(string) ($xml->xpath('/audit/administratif/auditeur/usr_logiciel_id')[0] ?? '');
 		
-		$cp = (string) (@$xml->xpath('administratif/geolocalisation/adresses/adresse_bien/code_postal_brut')[0]);
+		$cp = (string) ($xml->xpath('administratif/geolocalisation/adresses/adresse_bien/code_postal_brut')[0] ?? '');
 		
 		if ($cp){
 			$res['departement'] = substr(str_pad($cp, 5, "0", STR_PAD_LEFT),0,2);
 		} else { //si pas de CP, on recherche la zone climatique
-			$meteo = $this->xml2array(@$xml->xpath('logement_collection/logement/meteo'));
+			$meteo = $this->xml2array($xml->xpath('logement_collection/logement/meteo') ?? '');
 			$res['departement'] = $this->getCorrespApiB2c2('apiExtCorDepartement',$meteo);
 		}
 		
@@ -788,9 +855,9 @@ class ApiFdrB2c2 extends CthB2C2{
 		$this->jData['projet']['batiment'] = [];
 		$res = &$this->jData['projet']['batiment'];
 		
-		$caracteristique_generale = $this->xml2array(@$xml->xpath('logement_collection/logement/caracteristique_generale')[0]);
+		$caracteristique_generale = $this->xml2array($xml->xpath('logement_collection/logement/caracteristique_generale')[0] ?? '');
 		
-		$meteo = $this->xml2array(@$xml->xpath('logement_collection/logement/meteo'));
+		$meteo = $this->xml2array($xml->xpath('logement_collection/logement/meteo') ?? '');
 				
 
 		$res['typeBat'] = $this->getCorrespApiB2c2('apiExtCorTypeBat',$caracteristique_generale);
@@ -842,33 +909,33 @@ class ApiFdrB2c2 extends CthB2C2{
 		//dans l'api on ne stoque pas en % mais en valeur.
 		switch($nomLot){
 			case 'mur':
-				return floatval(@$xmlLot->xpath('donnee_entree/surface_paroi_opaque')[0]);
+				return floatval($xmlLot->xpath('donnee_entree/surface_paroi_opaque')[0] ?? '');
 				break;
 			case 'plancherHaut':
-				return floatval(@$xmlLot->xpath('donnee_entree/surface_paroi_opaque')[0]);
+				return floatval($xmlLot->xpath('donnee_entree/surface_paroi_opaque')[0] ?? '');
 				break;
 			case 'plancherBas':
-				return floatval(@$xmlLot->xpath('donnee_entree/surface_paroi_opaque')[0]);
+				return floatval($xmlLot->xpath('donnee_entree/surface_paroi_opaque')[0] ?? '');
 				break;
 			case 'menuiserie':
-				return floatval(@$xmlLot->xpath('donnee_entree/surface_totale_baie')[0]);
+				return floatval($xmlLot->xpath('donnee_entree/surface_totale_baie')[0] ?? '');
 				break;
 			case 'ecs':
-				return floatval(@$xmlLot->xpath('donnee_intermediaire/conso_ecs')[0]);
+				return floatval($xmlLot->xpath('donnee_intermediaire/conso_ecs')[0] ?? '');
 				break;
 			case 'chauffage':
 				$emet = $xmlLot->xpath('emetteur_chauffage_collection/emetteur_chauffage')[0];
-				return floatval(@$emet->xpath('donnee_entree/surface_chauffee')[0]);
+				return floatval($emet->xpath('donnee_entree/surface_chauffee')[0] ?? '');
 				break;
 			case 'ventilation':
-				return floatval(@$xmlLot->xpath('donnee_entree/surface_ventile')[0]);
+				return floatval($xmlLot->xpath('donnee_entree/surface_ventile')[0] ?? '');
 				break;
 		}
 		return 0;
 	}
 	
 	public function getLogiciel(){
-		return @$this->jData['projet']['general']['logiciel'];
+		return $this->jData['projet']['general']['logiciel'] ?? '';
 	}
 	
 	/*************************************************/
@@ -876,14 +943,14 @@ class ApiFdrB2c2 extends CthB2C2{
 	/*************************************************/
 	
 	protected function getDesignLot($xmlLot,$generateur=null,$emet=null){
-		$aLib = [trim((string) @$xmlLot->xpath('donnee_entree/description')[0])];
+		$aLib = [trim((string) ($xmlLot->xpath('donnee_entree/description')[0] ?? ''))];
 		
 		if ($generateur!==null){
-			$aLib[] = trim((string) @$generateur->xpath('donnee_entree/description')[0]);
+			$aLib[] = trim((string) ($generateur->xpath('donnee_entree/description')[0] ?? ''));
 		}
 		
 		if ($emet!==null){
-			$aLib[] = trim((string) @$emet->xpath('donnee_entree/description')[0]);
+			$aLib[] = trim((string) ($emet->xpath('donnee_entree/description')[0] ?? ''));
 		}
 		
 		return implode(' - ',array_filter($aLib));
@@ -915,15 +982,15 @@ class ApiFdrB2c2 extends CthB2C2{
 		foreach ($aLot as $numLot=>$xmlLot){
 			$resLot = [];			
 			$resLot['designLot'] = $this->getDesignLot($xmlLot);
-			$valEntre = $this->xml2array(@$xmlLot->xpath('donnee_entree'));
+			$valEntre = $this->xml2array($xmlLot->xpath('donnee_entree') ?? '');
 			$resLot['strucMur'] = $this->getCorrespApiB2c2('apiExtCorStrucMur',$valEntre);
 			$resLot['typeIsoMur'] = $this->getCorrespApiB2c2('apiExtCorTypeIsoMur', $valEntre);
 			
 			$resLot['part'] = $this->getPartXmlLot($nomLot,$xmlLot);
 			
-			$this->setPeformancesInit($resLot,$nomLot,@$xmlLot->xpath('donnee_entree/resistance_isolation')[0]);
+			$this->setPeformancesInit($resLot,$nomLot,$xmlLot->xpath('donnee_entree/resistance_isolation')[0] ?? '');
 			
-			$resLot['reference'] = $this->getReference($nomLot,$xmlLot);
+			$resLot['cleLot'] = $this->getCleLot($nomLot,$xmlLot);
 			
 			$res[] = ['existant' => $resLot];
 		}
@@ -945,17 +1012,19 @@ class ApiFdrB2c2 extends CthB2C2{
 			
 			$typeLot['existant']['etape'] = $etape;
 
-			//on ecrase la désignation du lot car on est pas sur que le lien entre l'initial et le final soit respecté
+			$valEntre = $this->xml2array($xmlLot->xpath('donnee_entree') ?? '');
+
+			//on écrase les valeurs du lot car on est pas sur que le lien entre l'initial et le final soit respecté
 			$typeLot['existant']['designLot'] = $this->getDesignLot($xmlLot);
-		
-			$valEntre = $this->xml2array(@$xmlLot->xpath('donnee_entree'));
-			
+			$typeLot['existant']['strucMur'] = $this->getCorrespApiB2c2('apiExtCorStrucMur',$valEntre);
+			$typeLot['existant']['typeIsoMur'] = 'non';//on considère que le mur n'est pas isolé à l’état initial car on ne peu faire le lien avec l’état init ou le mur peut être inexistant
+							
 			$solutionExt = [];
 			$solutionExt['resTypeIsoMur'] =  $this->getCorrespApiB2c2('apiExtCorResTypeIsoMur', $valEntre);		
 			
 			$this->affecteLotSolutionExt($nomLot,$typeLot,$solutionExt);
 								
-			$resistance = (string) @$xmlLot->xpath('donnee_entree/resistance_isolation')[0];
+			$resistance = (string) ($xmlLot->xpath('donnee_entree/resistance_isolation')[0] ?? '');
 			if ($resistance !=='' ){
 				$typeLot['existant']['perfMurFinal_customVal'] = (float) $resistance;
 				$typeLot['existant']['perfMurFinal']='customVal';
@@ -981,18 +1050,19 @@ class ApiFdrB2c2 extends CthB2C2{
 		foreach ($aLot as $numLot=>$xmlLot){
 			$resLot = [];			
 			$resLot['designLot'] = $this->getDesignLot($xmlLot);
-			$valEntre = $this->xml2array(@$xmlLot->xpath('donnee_entree'));
-
+			$valEntre = $this->xml2array($xmlLot->xpath('donnee_entree') ?? '');			
+			$valEntre['enum_type_travaux_id'] = '';//de toute façon on ne se sert plus de l’état initial.	
+			
 			$resLot['contactPlancherHaut'] = $this->getCorrespApiB2c2('apiExtCorContactPlancherHaut',$valEntre);
 			$resLot['structurePlancherHaut'] = $this->getCorrespApiB2c2('apiExtCorStructurePlancherHaut',$valEntre);
 			
 			
-			$this->setPeformancesInit($resLot,$nomLot,@$xmlLot->xpath('donnee_entree/resistance_isolation')[0]);
+			$this->setPeformancesInit($resLot,$nomLot,$xmlLot->xpath('donnee_entree/resistance_isolation')[0] ?? '');
 			
 			
 			$resLot['part'] = $this->getPartXmlLot($nomLot,$xmlLot);
 
-			$resLot['reference'] = $this->getReference($nomLot,$xmlLot);
+			$resLot['cleLot'] = $this->getCleLot($nomLot,$xmlLot);
 			$res[] = ['existant' => $resLot];
 			
 			
@@ -1017,22 +1087,24 @@ class ApiFdrB2c2 extends CthB2C2{
 		foreach ($aLotATraiter as $numLot=>$xmlLot){			
 			$typeLot = &$this->getLotInitalCorrespondant($nomLot,$xmlLot,$etape);
 			
-			$typeLot['existant']['etape']=$etape;		
+			$typeLot['existant']['etape']=$etape;					
 			
-			//on écrase la désignation du lot car on est pas sur que le lien entre l'initial et le final soit respecté
+			$valEntre = $this->xml2array($xmlLot->xpath('donnee_entree') ?? '');
+			
+			//on écrase les valeurs du lot car on est pas sur que le lien entre l'initial et le final soit respecté
 			$typeLot['existant']['designLot'] = $this->getDesignLot($xmlLot);
+			$valEntre['enum_type_travaux_id'] = $this->xmlLotGetTypeTravaux($xmlLot,$etape);//pour savoir si c'est un toit terrasse
+			$typeLot['existant']['contactPlancherHaut'] = $this->getCorrespApiB2c2('apiExtCorContactPlancherHaut',$valEntre);
+			$typeLot['existant']['structurePlancherHaut'] = $this->getCorrespApiB2c2('apiExtCorStructurePlancherHaut',$valEntre);
+
+			//on en a besoin dans les tableaux de correspondance ci-après
+			$valEntre['contactPlancherHaut'] = $typeLot['existant']['contactPlancherHaut'];		
 			
-			$valEntre = $this->xml2array(@$xmlLot->xpath('donnee_entree'));
-			
-			
-			
-			//on ne prends pas le contactPlancherHaut de l'existant, car le plancher d'origine peut être inexistant dans le cas d'une création de plancher
-			$valEntre['contactPlancherHaut'] = $this->getCorrespApiB2c2('apiExtCorContactPlancherHaut',$valEntre);
 
 			$solutionExt = [];
 			$solutionExt['resTypeIsoPlancherHaut'] =  $this->getCorrespApiB2c2('apiExtCorResTypeIsoPlancherHaut', $valEntre);	
 				
-			$resistance = (string) @$xmlLot->xpath('donnee_entree/resistance_isolation')[0];
+			$resistance = (string) ($xmlLot->xpath('donnee_entree/resistance_isolation')[0] ?? '');
 			if ($resistance !=='' ){
 				$typeLot['existant']['perfPlancherHautFinal_customVal'] = (float) $resistance;
 				$typeLot['existant']['perfPlancherHautFinal'] = 'customVal';
@@ -1061,17 +1133,17 @@ class ApiFdrB2c2 extends CthB2C2{
 		foreach ($aLot as $numLot=>$xmlLot){
 			$resLot = [];			
 			$resLot['designLot'] = $this->getDesignLot($xmlLot);
-			$valEntre = $this->xml2array(@$xmlLot->xpath('donnee_entree'));
+			$valEntre = $this->xml2array($xmlLot->xpath('donnee_entree') ?? '');
 
 			$resLot['typePlancherBas'] = $this->getCorrespApiB2c2('apiExtCorTypePlancherBas',$valEntre);
 			
 			$resLot['structurePlancherBas'] = $this->getCorrespApiB2c2('apiExtCorStructurePlancherBas',$valEntre);
 			
-			$this->setPeformancesInit($resLot,$nomLot,@$xmlLot->xpath('donnee_entree/resistance_isolation')[0]);
+			$this->setPeformancesInit($resLot,$nomLot,$xmlLot->xpath('donnee_entree/resistance_isolation')[0] ?? '');
 			
 			$resLot['part'] = $this->getPartXmlLot($nomLot,$xmlLot);
 			
-			$resLot['reference'] = $this->getReference($nomLot,$xmlLot);
+			$resLot['cleLot'] = $this->getCleLot($nomLot,$xmlLot);
 			$res[] = ['existant' => $resLot];
 			
 		}
@@ -1096,13 +1168,16 @@ class ApiFdrB2c2 extends CthB2C2{
 				
 				$typeLot['existant']['etape']=$etape;
 				
+								
+				$valEntre = $this->xml2array($xmlLot->xpath('donnee_entree') ?? '');
+				
+				//on écrase les valeurs du lot car on est pas sur que le lien entre l'initial et le final soit respecté
 				$typeLot['existant']['designLot'] = $this->getDesignLot($xmlLot);
-				
-				$valEntre = $this->xml2array(@$xmlLot->xpath('donnee_entree'));
+				$typeLot['existant']['typePlancherBas'] = $this->getCorrespApiB2c2('apiExtCorTypePlancherBas',$valEntre);
+				$typeLot['existant']['structurePlancherBas'] = $this->getCorrespApiB2c2('apiExtCorStructurePlancherBas',$valEntre);
 									
-				
-				//on ne prends pas le contactPlancherHaut de l'existant, car le plancher d'origine peut être inexistant dans le cas d'une création de plancher
-				$valEntre['typePlancherBas'] = $this->getCorrespApiB2c2('apiExtCorTypePlancherBas',$valEntre);
+				//on en a besoin dans les tableaux de correspondance ci-après
+				$valEntre['typePlancherBas'] = $typeLot['existant']['typePlancherBas'] ;				
 				
 				$solutionExt = [];
 				$solutionExt['resTypeIsoPlancherBas'] =  $this->getCorrespApiB2c2('apiExtCorResTypeIsoPlancherBas', $valEntre);	
@@ -1110,7 +1185,7 @@ class ApiFdrB2c2 extends CthB2C2{
 				
 				$this->affecteLotSolutionExt($nomLot,$typeLot,$solutionExt);
 					
-				$resistance = (string) @$xmlLot->xpath('donnee_entree/resistance_isolation')[0];
+				$resistance = (string) ($xmlLot->xpath('donnee_entree/resistance_isolation')[0] ?? '');
 				if ($resistance !=='' ){
 					$typeLot['existant']['perfPlancherBasFinal_customVal'] = (float) $resistance;
 					$typeLot['existant']['perfPlancherBasFinal'] = 'customVal';
@@ -1138,13 +1213,13 @@ class ApiFdrB2c2 extends CthB2C2{
 		foreach ($aLot as $numLot=>$xmlLot){
 			$resLot = [];			
 			$resLot['designLot'] = $this->getDesignLot($xmlLot);
-			$valEntre = $this->xml2array(@$xmlLot->xpath('donnee_entree'));
+			$valEntre = $this->xml2array($xmlLot->xpath('donnee_entree') ?? '');
 
 			$resLot['protectionSolaireMenuiserie'] = $this->getCorrespApiB2c2('apiExtCorProtectionSolaireMenuiserie',$valEntre);
 			$resLot['fenetreDeToit'] = $this->getCorrespApiB2c2('apiExtCorFenetreDeToit',$valEntre);
 			
 			
-			$this->setPeformancesInit($resLot,$nomLot,@$xmlLot->xpath('donnee_intermediaire/uw')[0]);
+			$this->setPeformancesInit($resLot,$nomLot,$xmlLot->xpath('donnee_intermediaire/uw')[0] ?? '');
 		
 			
 			$surface = $this->getPartXmlLot($nomLot,$xmlLot);	
@@ -1152,7 +1227,7 @@ class ApiFdrB2c2 extends CthB2C2{
 			$this->jData['projet']['batiment']['surfMur'] +=  $surface; //on ajoute la surf des menuiseries aux murs
 
 
-			$resLot['reference'] = $this->getReference($nomLot,$xmlLot);
+			$resLot['cleLot'] = $this->getCleLot($nomLot,$xmlLot);
 			$res[] = ['existant' => $resLot];
 
 		}
@@ -1181,9 +1256,9 @@ class ApiFdrB2c2 extends CthB2C2{
 			//on ecrase la désignation du lot car on est pas sur que le lien entre l'initial et le final soit respecté
 			$typeLot['existant']['designLot'] = $this->getDesignLot($xmlLot);
 			
-			$enum_etape_id = (int) @$logement->xpath('caracteristique_generale/enum_etape_id')[0];
+			$enum_etape_id = (int) $logement->xpath('caracteristique_generale/enum_etape_id')[0] ?? '';
 
-			$valEntre = $this->xml2array(@$xmlLot->xpath('donnee_entree'));
+			$valEntre = $this->xml2array($xmlLot->xpath('donnee_entree') ?? '');
 			
 			
 			
@@ -1192,7 +1267,7 @@ class ApiFdrB2c2 extends CthB2C2{
 		
 			$this->affecteLotSolutionExt($nomLot,$typeLot,$solutionExt);
 				
-			$resistance = (string) @$xmlLot->xpath('donnee_intermediaire/uw')[0];;
+			$resistance = (string) ($xmlLot->xpath('donnee_intermediaire/uw')[0] ?? '');
 			if ($resistance !=='' ){
 				$typeLot['existant']['perfMenuiserieFinal_customVal'] = (float) $resistance;
 				$typeLot['existant']['perfMenuiserieFinal'] = 'customVal';
@@ -1224,8 +1299,8 @@ class ApiFdrB2c2 extends CthB2C2{
 			$valEntre['enum_type_installation_solaire_id'] = '';//le champ n'est pas forcément remplis.			
 			$valEntre['reseau_distribution_isole'] = '';//le champ n'est pas forcément remplis.
 			
-			$valEntre = array_merge($valEntre,$this->xml2array(@$xmlLot->xpath('generateur_ecs_collection/generateur_ecs/donnee_entree')));
-			$valEntre = array_merge($valEntre,$this->xml2array(@$xmlLot->xpath('donnee_entree')));		
+			$valEntre = array_merge($valEntre,$this->xml2array($xmlLot->xpath('generateur_ecs_collection/generateur_ecs/donnee_entree') ?? ''));
+			$valEntre = array_merge($valEntre,$this->xml2array($xmlLot->xpath('donnee_entree') ?? ''));		
 			
 			$resLot['typeEcs'] = $this->getCorrespApiB2c2('apiExtCorTypeEcs',$valEntre);
 			
@@ -1235,7 +1310,7 @@ class ApiFdrB2c2 extends CthB2C2{
 			$resLot['part'] = $this->getPartXmlLot($nomLot,$xmlLot);
 
 	
-			$resLot['reference'] = $this->getReference($nomLot,$xmlLot);
+			$resLot['cleLot'] = $this->getCleLot($nomLot,$xmlLot);
 			$res[] = ['existant' => $resLot];
 		}
 
@@ -1251,7 +1326,7 @@ class ApiFdrB2c2 extends CthB2C2{
 
 		//met le enum_etat_composant_id à 2  si le générateur a été remplacé
 		foreach ($aLot as $numLot=>$xmlLot){
-			$enum_etat_gen = intval(@$xmlLot->xpath('generateur_ecs_collection/generateur_ecs/donnee_entree/enum_etat_composant_id')[0]);
+			$enum_etat_gen = intval($xmlLot->xpath('generateur_ecs_collection/generateur_ecs/donnee_entree/enum_etat_composant_id')[0] ?? '');
 			if ($enum_etat_gen==2){
 				$xmlLot->xpath('donnee_entree/enum_etat_composant_id')[0][0]=2;
 			}
@@ -1278,8 +1353,8 @@ class ApiFdrB2c2 extends CthB2C2{
 			$valEntre['enum_type_installation_solaire_id'] = '';//le chmap n'est pas forcément remplis.	
 				
 					
-			$valEntre = array_merge($valEntre,$this->xml2array(@$xmlLot->xpath('generateur_ecs_collection/generateur_ecs/donnee_entree')));
-			$valEntre = array_merge($valEntre,$this->xml2array(@$xmlLot->xpath('donnee_entree')));						
+			$valEntre = array_merge($valEntre,$this->xml2array($xmlLot->xpath('generateur_ecs_collection/generateur_ecs/donnee_entree') ?? ''));
+			$valEntre = array_merge($valEntre,$this->xml2array($xmlLot->xpath('donnee_entree') ?? ''));						
 			
 			$valEntre = array_merge($typeLot['existant'],$valEntre);
 			
@@ -1321,9 +1396,9 @@ class ApiFdrB2c2 extends CthB2C2{
 	protected function ajouteEmetGen($insallSansGenNiEmet,$emet,$gen = false){
 		$newInstall = $this->simpleXMLClone($insallSansGenNiEmet);	
 
-		$enum_etat_composant_id_emet = (string) @$emet->xpath('donnee_entree/enum_etat_composant_id')[0];
+		$enum_etat_composant_id_emet = (string) ($emet->xpath('donnee_entree/enum_etat_composant_id')[0] ?? '');
 		if ($gen){			
-			$enum_etat_composant_id_gen = (string) @$gen->xpath('donnee_entree/enum_etat_composant_id')[0];
+			$enum_etat_composant_id_gen = (string) ($gen->xpath('donnee_entree/enum_etat_composant_id')[0] ?? '');
 		} else {
 			$enum_etat_composant_id_gen = 1 ;
 		}	
@@ -1369,11 +1444,11 @@ class ApiFdrB2c2 extends CthB2C2{
 			foreach ($aEmet as $emet ){	
 				$aInstallEmet = [];	
 				
-				$idLien = (string) @$emet->xpath('donnee_entree/enum_lien_generateur_emetteur_id')[0];
+				$idLien = (string) ($emet->xpath('donnee_entree/enum_lien_generateur_emetteur_id')[0] ?? '');
 				
 				//lien avec le générateur
 				foreach ($aGen as $gen){
-					$idLienCurrent = (string) @$gen->xpath('donnee_entree/enum_lien_generateur_emetteur_id')[0];
+					$idLienCurrent = (string) ($gen->xpath('donnee_entree/enum_lien_generateur_emetteur_id')[0] ?? '');
 					if ($idLien == $idLienCurrent) {
 						//ajout d'une ligne dans 
 						$aInstallEmet[] = $this->ajouteEmetGen($insallSansGenNiEmet,$emet,$gen);
@@ -1423,13 +1498,13 @@ class ApiFdrB2c2 extends CthB2C2{
 			$resLot['designLot'] = $this->getDesignLot($xmlLot,$generateur,$emet);
 			
 			$valEntre = [];
-			$valEntre = array_merge($valEntre,$this->xml2array(@$xmlLot->xpath('donnee_entree')));	
-			$valEntre = array_merge($valEntre,$this->xml2array(@$emet->xpath('donnee_entree')));
+			$valEntre = array_merge($valEntre,$this->xml2array($xmlLot->xpath('donnee_entree') ?? ''));	
+			$valEntre = array_merge($valEntre,$this->xml2array($emet->xpath('donnee_entree') ?? ''));
 							
 			$valEntre['enum_type_generateur_ch_id'] = '';
 			$valEntre['enum_type_energie_id'] = '';
 			if ($generateur){
-				$valEntre = array_merge($valEntre,$this->xml2array(@$generateur->xpath('donnee_entree')));
+				$valEntre = array_merge($valEntre,$this->xml2array($generateur->xpath('donnee_entree') ?? ''));
 		
 			}
 		
@@ -1441,7 +1516,7 @@ class ApiFdrB2c2 extends CthB2C2{
 			$resLot['part'] =$this->getPartXmlLot($nomLot,$xmlLot);
 
 	
-			$resLot['reference'] = $this->getReference($nomLot,$xmlLot);
+			$resLot['cleLot'] = $this->getCleLot($nomLot,$xmlLot);
 	
 			$res[] = ['existant' => $resLot];
 			
@@ -1463,12 +1538,12 @@ class ApiFdrB2c2 extends CthB2C2{
 
 
 		foreach ($aLotATraiter as $xmlLot){			
-			
+		
 			$typeLot = &$this->getLotInitalCorrespondant($nomLot,$xmlLot,$etape);
 			
 			
 			$emet = $xmlLot->xpath('emetteur_chauffage_collection/emetteur_chauffage')[0];
-			$generateur = @$xmlLot->xpath('generateur_chauffage_collection/generateur_chauffage')[0];
+			$generateur = $xmlLot->xpath('generateur_chauffage_collection/generateur_chauffage')[0] ?? '';
 			
 			
 			$typeLot['existant']['etape']=$etape;
@@ -1478,17 +1553,15 @@ class ApiFdrB2c2 extends CthB2C2{
 			
 			$valEntre = [];
 			$valEntre['typeBat'] = $this->jData['projet']['batiment']['typeBat'];	
-			$valEntre = array_merge($valEntre,$this->xml2array(@$xmlLot->xpath('donnee_entree')));	
-			$valEntre = array_merge($valEntre,$this->xml2array(@$emet->xpath('donnee_entree')));
+			$valEntre = array_merge($valEntre,$this->xml2array($xmlLot->xpath('donnee_entree') ?? ''));	
+			$valEntre = array_merge($valEntre,$this->xml2array($emet->xpath('donnee_entree') ?? ''));
 							
 			$valEntre['enum_type_generateur_ch_id'] = '';
 			$valEntre['enum_type_energie_id'] = '';
 			if ($generateur){
-				$valEntre = array_merge($valEntre,$this->xml2array(@$generateur->xpath('donnee_entree')));
+				$valEntre = array_merge($valEntre,$this->xml2array($generateur->xpath('donnee_entree') ?? ''));
 			} 
 			
-	
-	
 			$solutionExt = [];
 
 			$solutionExt['resTypeProd'] =  $this->getCorrespApiB2c2('apiExtCorResTypeProd', $valEntre);	
@@ -1519,8 +1592,8 @@ class ApiFdrB2c2 extends CthB2C2{
 			
 			$valEntre = [];
 			
-			$valEntre = array_merge($valEntre,$this->xml2array(@$xmlLot->xpath('ventilation_collection/ventilation/donnee_entree')));
-			$valEntre = array_merge($valEntre,$this->xml2array(@$xmlLot->xpath('donnee_entree')));	
+			$valEntre = array_merge($valEntre,$this->xml2array($xmlLot->xpath('ventilation_collection/ventilation/donnee_entree') ?? ''));
+			$valEntre = array_merge($valEntre,$this->xml2array($xmlLot->xpath('donnee_entree') ?? ''));	
 			$valEntre['typeProdChauffage'] = $this->getTypeLotPrinc('chauffage')['existant']['typeProdChauffage'];
 	
 			$resLot['chauffageDependantVentilation'] = $this->getCorrespApiB2c2('apiExtCorChauffageDependantVentilation',$valEntre);
@@ -1528,7 +1601,7 @@ class ApiFdrB2c2 extends CthB2C2{
 
 			$resLot['part'] = $this->getPartXmlLot($nomLot,$xmlLot);
 			
-			$resLot['reference'] = $this->getReference($nomLot,$xmlLot);
+			$resLot['cleLot'] = $this->getCleLot($nomLot,$xmlLot);
 			$res[] = ['existant' => $resLot];
 			
 		}
@@ -1552,12 +1625,17 @@ class ApiFdrB2c2 extends CthB2C2{
 			
 			$typeLot['existant']['etape']=$etape;	
 			
-			//on ecrase la désignation du lot car on est pas sur que le lien entre l'initial et le final soit respecté
-			$typeLot['existant']['designLot'] = $this->getDesignLot($xmlLot);
+			
 			
 			$valEntre = [];
 			$valEntre['typeBat'] = $this->jData['projet']['batiment']['typeBat'];
-			$valEntre = array_merge($valEntre,$this->xml2array(@$xmlLot->xpath('donnee_entree')));	
+			$valEntre = array_merge($valEntre,$this->xml2array($xmlLot->xpath('donnee_entree') ?? ''));	
+			
+			//on ecrase la désignation du lot car on est pas sur que le lien entre l'initial et le final soit respecté
+			$typeLot['existant']['designLot'] = $this->getDesignLot($xmlLot);
+			$valEntre['typeProdChauffage'] = $this->getTypeLotPrinc('chauffage')['existant']['typeProdChauffage'];	//on en a besoin pour calculer apiExtCorChauffageDependantVentilation
+			$typeLot['existant']['chauffageDependantVentilation'] = $this->getCorrespApiB2c2('apiExtCorChauffageDependantVentilation',$valEntre);
+			$typeLot['existant']['typeVentilation'] =  $this->getCorrespApiB2c2('apiExtCorTypeVentilation',$valEntre);
 	
 	
 			$solutionExt = [];
@@ -1572,7 +1650,7 @@ class ApiFdrB2c2 extends CthB2C2{
 
 		
 	protected function warning($msg,$detail=''){
-		if (/*!empty($this->bDebugApi)*/ !$this->bSortiePDF){
+		if (!empty($this->bDebugApi) /*!$this->bSortiePDF*/){
 			$msg.=$detail;
 		}
 		$this->aWarning[] = $msg;
@@ -1603,8 +1681,12 @@ class ApiFdrB2c2 extends CthB2C2{
 				break;
 			case 'nonPreconise':
 			case 'erreurSaisie':
-				$valRetour = $this->getValChamp('remarqueSolution',$valRetour);
-				$this->warning($valRetour ." Champ '$nomTableau' à l'étape n°".$this->debugNEtape.", pour le lot ".$this->debugNomLot.". ",print_r($aData,true));
+				$msg = $this->getValChamp('remarqueSolution',$valRetour);
+				if($this->bDebugApi){
+					$msg .= " Champ '$nomTableau'";
+				}
+				$msg .= " A l'étape n°".$this->debugNEtape.", pour le lot ".$this->debugNomLot.". ";
+				$this->warning($msg,print_r($aData,true));
 				break;
 		}
 		

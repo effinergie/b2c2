@@ -1,3 +1,33 @@
+V1.14
+--------
+Corrections des étiquettes DPE (>800m et zones H1b,H1c,H2d)
+
+V1.13
+--------
+Stockage des fiches PDF DOREMI sur le site bbc-par-etapes.fr
+Corrections de certains liens vers l'arrêté du 3 octobre
+
+V1.12
+--------
+- adaptation du code à PHP8
+- ajout des étiquettes DPE à la feuille de route éditeur
+- correction d'un bug quand une étape ne contient que des lots dont la solution est "l'élément ne sera pas modifié")
+- suppressions des phrases conseil 'pro' pour ne garder que les phrases conseil 'ménage' car elles n'étaient plus utilisées dans le code.
+
+V1.11
+--------
+- corrections d'un bug sur les performance minimales des parois
+
+V1.10
+--------
+- corrections sur les phrases ménages 
+
+V1.09
+--------
+- Amélioration du calcul des valeurs de l’état avant travaux 
+- Prise en compte des chaudières ECS au GPL
+- Prise en compte des références de générateurs mixtes dans la liste des travaux
+
 V1.08
 --------
 * Ajout Chauffage Gaz à Ventouse. 
@@ -8,7 +38,6 @@ V1.07
 --------
 * Modification du graphisme de le feuille de route
 * Test du Ubat à la dernière étape de travaux quand il est présent dans la XML
-
 
 
 V1.06

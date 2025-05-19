@@ -60,9 +60,8 @@ var apiFdrB2C2 ={
 			auditXML:this.jqInputVal.val(),
 			enumScenario:this.jqEnumScenario.val(),
 			typeRetour:this.jqTypeRetour.val(),
-			debugMode:this.jqDebugMode.val()
+			debugMode:(this.jqDebugMode.length ? this.jqDebugMode.val() : '') 
 		};
-		
 		
 		let params={
 			data : {

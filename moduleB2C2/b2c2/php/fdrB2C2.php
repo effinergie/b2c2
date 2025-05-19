@@ -4,6 +4,7 @@ require_once 'apiSolB2C2.php';
 class FdrB2C2 extends ApiSolB2C2{
 
 	protected $bGeneratePDF = false;
+	protected $bFdrAPI = false;
 	protected $bFdrEditeur = false;
 	protected $bFdrProprietaire = false;
 	protected $bPDFtoString = false;
@@ -74,23 +75,24 @@ class FdrB2C2 extends ApiSolB2C2{
 		
 		$html = '';
 		
-		if ($this->bGeneratePDF){			
+		/*if ($this->bGeneratePDF){			
 			$html .= '<img style="margin-top:-30px;" src="'.$this->htmlImg('img/bandeauHeaderB2C2_2.jpg').'"><br>';
-		}
+		}*/
 		
-		if (!$this->bFdrEditeur){
+		/*if (!$this->bFdrEditeur){
 			$html .= $this->htmlFdrDescription($data);
-		}
+		}*/
 				
-		if ($this->bFdrEditeur){
+		if (!$this->bFdrProprietaire){
 			$html .= $this->htmlWarning();
+			$html .= $this->htmlFdrDescription($data);			
 		}
 		
 		$html .= '<div class="titreFdr">Respect des critères BBC par étapes</div>'.$this->htmlFdrRespectCriteresB2C2($data);
 		
 		$html .= $this->htmlFdrListeEtape($data);
 		
-		if (!$this->bFdrEditeur){
+		if (!$this->bFdrAPI){
 			$html .= $this->htmlFdrCalculEnergieDetail($data);
 		}	
 		return $html;
@@ -121,12 +123,12 @@ class FdrB2C2 extends ApiSolB2C2{
 	private function htmlEntetePiedPagePDF($dataFdr){
 
 		
-		if ($this->bFdrProprietaire){
+		//if ($this->bFdrProprietaire){
 			return $this->htmlPropEntetePiedPagePDF();
-		}
+		//}
 		
 		
-		$html = '';
+		/*$html = '';
 
 		$html.= '<div id="header">
 					<div style="float:right;">'.@$this->jData['projet']['general']['nomProjet'].'</div>
@@ -138,7 +140,7 @@ class FdrB2C2 extends ApiSolB2C2{
 				</div>';
 		
 		
-		return $html;
+		return $html;*/
 	}
 	
 	private function PDFencodeString($str){
@@ -162,7 +164,7 @@ class FdrB2C2 extends ApiSolB2C2{
 	}
 	
 	private function PDFRemplaceNumPages(&$dompdf){
-		//hack pour remplacer les chaines '%%pagewriteXXXX%' par le numéros de pages où se trouve la chaine '%%pagereadXXXX%' 
+		//hack pour remplacer les chaines '%%pagewriteXXXX%' par le numéros de pages où se trouve la chaîne '%%pagereadXXXX%' 
 				
 		$aObj = &$dompdf->get_canvas()->get_cpdf()->objects;
 
@@ -226,12 +228,15 @@ class FdrB2C2 extends ApiSolB2C2{
 	}
 	
 	private function cssPDF(){		
-		$fichierCSS = 'fdrDomPDF.css';
+		$fichierCSS = 'fdrAuditPDF.css';
 		if ($this->bFdrProprietaire){
 			$fichierCSS = 'fdrPropPDF.css';
 		}
 		
-		return '<style type="text/css">'.file_get_contents(__DIR__.'/../css/'.$fichierCSS).' </style>';		
+		return '<style type="text/css">'.
+					file_get_contents(__DIR__.'/../css/'.$fichierCSS).
+					file_get_contents(__DIR__.'/../css/fdrCommunPDF.css').
+				' </style>';		
 	}
 		
 	//////////////////////////////////////////////
@@ -474,7 +479,10 @@ class FdrB2C2 extends ApiSolB2C2{
 		$desc=$data['desc'];
 		$html = '';
 		$descBat = '';
-
+		if (!$this->bFdrEditeur){
+			$html .= '<div style="font-weight:bold; color:red;">Il est important de se faire accompagner dans votre projet de rénovation par un conseiller France Rénov\' et des professionnels qualifiés.<br><br></div>';
+			$html .= $this->htmlTitreFdr('Données Générales',true); 	
+		}
 		$html .= '<table class="tabFdr"><tbody>';
 		$html .= '<tr class="entete"><td class="col titreTab">Général</td><td class="col titreTab">Bâtiment</td></tr>';
 		$html .= '<tr><td class="col">';
@@ -500,8 +508,7 @@ class FdrB2C2 extends ApiSolB2C2{
 		
 		$html .= $this->htmlFdrConsommation($data);
 		
-		$html = $this->htmlTitreFdr('Données Générales',true).
-				$this->htmlDivTab($html,'class="blocDesc blocCadre"');	
+		$html = $this->htmlDivTab($html,'class="blocDesc blocCadre"');	
 //echo $html; die;				
 		return $html;
 	}
@@ -540,7 +547,7 @@ class FdrB2C2 extends ApiSolB2C2{
 								'</td>'.
 							'</tr></table>'.
 			
-							(($this->bFdrEditeur) ? 
+							((!$this->bFdrAPI) ? 
 								'<div class="warning"><b>Attention : l\'évaluation énergétique utilisée ici n\'est pas assimilable à un DPE. </b></div>'
 								: ''
 							).
@@ -599,9 +606,10 @@ class FdrB2C2 extends ApiSolB2C2{
 			if (
 				isset($etape['lstLot']) //pour l'apiExt, si il n'y aucun travaux à une étape, il peut quand même y avoir le calcul thermique récupéré dans le XML
 				AND (
-						!($iEtap =='nonTraite' AND $this->bFdrEditeur) //on affiche pas le bloc "lots non traités" pour les éditeurs.
+						!($iEtap =='nonTraite' AND $this->bFdrAPI) //on affiche pas le bloc "lots non traités" pour les éditeurs.
 					)
-				){ 
+				){
+					
 				$titreFdr = 'Etape n°'. $iEtap .' des travaux';
 				if ($iEtap =='nonTraite'){
 					$titreFdr = "Lots non taités";
@@ -651,7 +659,7 @@ class FdrB2C2 extends ApiSolB2C2{
 	protected function htmlFdrEnteteEtape($bPerf){
 		$ligne = '';
 		$ligne .= $this->htmlFdrChampEtape('nomLot titreTab','Lots');
-		if (!$this->bFdrEditeur){
+		if (!$this->bFdrAPI){
 			$ligne .= $this->htmlFdrChampEtape('existant titreTab','Existant');
 		}
 		$ligne .= $this->htmlFdrChampEtape('descTrav titreTab','Description des travaux');
@@ -673,7 +681,7 @@ class FdrB2C2 extends ApiSolB2C2{
 			
 			
 			
-			if (!$this->bFdrEditeur){				
+			if (!$this->bFdrAPI){				
 				$txtExistant = '<b>' . $typeLot['designLot'] . ' :</b><br>' . $typeLot['existant'];
 				$ligne .= $this->htmlFdrChampEtape('existant',$txtExistant);
 			}
@@ -695,7 +703,7 @@ class FdrB2C2 extends ApiSolB2C2{
 		
 			//description des travaux
 			$descTrav = '';
-			if ($this->bFdrEditeur){				
+			if ($this->bFdrAPI){				
 				$descTrav = '<b>' . $typeLot['designLot'] . ' :</b><br>';							
 			}
 			$descTrav .=  $typeLot['descTrav'];
@@ -1428,13 +1436,14 @@ class FdrB2C2 extends ApiSolB2C2{
 
 		$html.= '			
 				<div id="header">
-					<img id="headerLogo" src="'.$this->htmlImg('img/BBC_par_etapes.png').'">											
+					<img id="headerLogo" src="'.$this->htmlImg('img/BBC_par_etapes.png').'">	
+					<div style="float:right;">'.($this->jData['projet']['general']['nomProjet'] ?? '').'</div>
 				</div>
 				
 				<div id="footer">
 					<img class="footerLogo Pouget" src="'.$this->htmlImg('img/PougetConsultant.png').'">
 					<img class="footerLogo Effi" src="'.$this->htmlImg('img/effinergie.png').'">
-					<div id="versionB2C2">V'.@$this::VERSION.'</div>
+					<div id="versionB2C2">V'.($this::VERSION ?? '').'</div>
 					<img class="footerLogo Ademe" src="'.$this->htmlImg('img/ademe.jpg').'">
 				</div>';
 		
@@ -1492,9 +1501,10 @@ class FdrB2C2 extends ApiSolB2C2{
 						
 						<p>Ce guide est un support qui doit vous aider tout au long de votre projet : pour préciser vos besoins auprès des entreprises consultées, pour analyser les devis et choisir vos entreprises, pour vérifier que les recommandations de mise en œuvre sont bien respectées en cours de chantier.</p>
 						
-						<p>N\'hésitez pas échanger sur ce document avec les professionnels qui vous accompagnent dans votre projet de travaux (conseiller France Renov’, entreprises…).
-						
-						Conservez-le dans votre carnet d’information du logement. Il vous sera utile lors des étapes de travaux ultérieures, et il fera foi en cas de vente de votre logement en le valorisant auprès des futurs acquéreurs.</p>
+						<p>N\'hésitez pas à vous faire accompagner dans votre projet de rénovation et à échanger sur ce document avec un conseiller France Rénov\'  et des professionnels qualifiés.
+						'.//<p>N\'hésitez pas échanger sur ce document avec les professionnels qui vous accompagnent dans votre projet de travaux (conseiller France Renov’, entreprises…).
+						'
+						Conservez-ce document dans votre carnet d’information du logement. Il vous sera utile lors des étapes de travaux ultérieures, et il fera foi en cas de vente de votre logement en le valorisant auprès des futurs acquéreurs.</p>
 
 				</div>';
 		return $html;
@@ -1518,7 +1528,9 @@ class FdrB2C2 extends ApiSolB2C2{
 					</ul>
 					Et bien sûr, traiter en priorité les autres problématiques qui peuvent affecter votre logement : sécurité électrique, traitement de l’amiante et du plomb, renforcement structurel, remontées capillaires...
 				</div>';
-
+		if (!$this->bFdrAPI){
+			$html .= '<div class="warning"><b>Attention : l\'évaluation énergétique utilisée ici n\'est pas assimilable à un DPE. </b><br><br></div>';
+		}
 		
 
 		$aEtapes = $data['parcour']['etapes'];	
@@ -1573,7 +1585,7 @@ class FdrB2C2 extends ApiSolB2C2{
 			
 		}		
 		$html .= '</tbody></table>';
-		
+
 		$html .= '<div class="parcourLegend">* Le label peut être délivré par un organisme certificateur sous réserve de respecter les critères du label.</div>';
 		return $html;
 	}
@@ -1875,8 +1887,8 @@ class FdrB2C2 extends ApiSolB2C2{
 												'<td>'.
 													'<table class="tabFdr tabInter"><tbody>'.
 														'<tr class="entete"><td class="col lots titreTab" colspan="2">
-															Interfaces entre '.$this->htmlPropPictoLot($nomLot ).$this->getValChamp('lstLot',$nomLot).
-															' et '.$this->htmlPropPictoLot($nomLotInter ).$this->getValChamp('lstLot',$nomLotInter).
+															Interfaces entre '.$this->getValChamp('lstLot',$nomLot).' '.$this->htmlPropPictoLot($nomLot ).
+															'et '.$this->getValChamp('lstLot',$nomLotInter).' '.$this->htmlPropPictoLot($nomLotInter ).
 														'</td></tr>'.
 														$htmlLot.
 													'</tbody></table>'.								

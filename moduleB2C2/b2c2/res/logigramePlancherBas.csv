@@ -1,5 +1,5 @@
 -idSol,typePlancherBas ,structurePlancherBas ,>=perfPlancherBasInit_cVal,-resTypeIsoPlancherBas,-resCaracIsoPlancherBas,-resRecomPlancherBas
-100,*,*,"4,5",nonPrioritaire,,
+100,*,*,3,nonPrioritaire,,
 1,terrePlein,*,*,sousDalle,#nonSpecifie,"decaissement,herisson"
 2,"terrePlein,videSanNonAcc",*,*,surDalle,sousChape,
 3,"terrePlein,videSanNonAcc",*,*,surDalle,plancherBois,pvpFortSd

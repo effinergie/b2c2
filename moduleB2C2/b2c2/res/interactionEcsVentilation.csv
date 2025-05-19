@@ -1,2 +1,2 @@
--idInter,lotEtape,resTypeProdEcs,-risque,-solution,-solutionMenages
-1,"ecs,ventilation",ballonThermo,Mauvais fonctionnement de la ventilation,Le Chauffe Eau Thermodynamique sur air extrait doit assurer la ventilation complète du logement.,Demandez à l'entreprise à ce que le Chauffe Eau Thermodynamique installé assure la ventilation complète du logement et respecte les débits réglementaires. 
+-idInter,lotEtape,resTypeProdEcs,-risque,-solution
+1,"ecs,ventilation",ballonThermo,Mauvais fonctionnement de la ventilation,Demandez à l'entreprise à ce que le Chauffe Eau Thermodynamique installé assure la ventilation complète du logement et respecte les débits réglementaires. 

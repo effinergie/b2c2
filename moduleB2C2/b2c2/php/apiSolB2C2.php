@@ -9,8 +9,8 @@ class ApiSolB2C2 extends baseB2C2{
 	protected $jData;
 	protected $jFdr;
 	protected $aTrace = [];
-	//protected $conformePerfEnv = PERF_OK;
-	protected $conformePerfEnvPremEtape = [];// = PERF_OK;
+
+	protected $conformePerfEnvPremEtape = [];
 	
 	
 	const OK = 'OK';
@@ -32,10 +32,7 @@ class ApiSolB2C2 extends baseB2C2{
 		$this->jData = [
 			'projet'=>[]
 		];
-//		$this->setData($aData);
-		
-		//$typoBat= $aData->typoBat;
-		//$aData[typoBat] = 'toto';
+
 		if (! $valTrouvee = $this->chercheValeurTableau('typologieBatiment',$aData)){	
 			return $this->setResSatusError([]);
 		}
@@ -55,7 +52,7 @@ class ApiSolB2C2 extends baseB2C2{
 					'ventilation'
 					];
 
-		//copie des champs necessaires pour la recherche de typologies dans certains lots
+		//copie des champs nécessaires pour la recherche de typologies dans certains lots
 		$aData['anneeConstr'] = $valTrouvee['anneeConstr'];
 		$aData['typeBat'] = $valTrouvee['typeBat'];
 
@@ -69,11 +66,6 @@ class ApiSolB2C2 extends baseB2C2{
 		
 		$this->chercheSolutionProjet();
 	
-		//solutions		
-		//$solutions = $this->genereSolutions($res);
-		
-		//$res['projet']['lstLot'] = array_replace_recursive($res['projet']['lstLot'],$solutions['solutions']);
-//echo'<pre>';print_r($solutions );die;
 		return $this->setResSatusOK($this->jData);
 	}
 	
@@ -81,7 +73,7 @@ class ApiSolB2C2 extends baseB2C2{
 		//affecte les customVal		
 		$this->affecteCustomVal();
 		
-		//rechere des solutions pour chaques lots
+		//recherche des solutions pour chaque lots
 		foreach ($this->jData['projet']['lstLot'] as $nomLot=>$lot){			
 			//recherche des solutions en fonction des valeurs d'entrées
 			$aLstSol = $this->chercheSolutionLot($nomLot,$this->jData['projet']['lstLot'][$nomLot]);
@@ -92,7 +84,7 @@ class ApiSolB2C2 extends baseB2C2{
 	
 	public function testeTypologie(){
 		$data=array();
-		//$data['id']: 
+		
 		$data['nomProjet']='test';
 		$data['departement']= 34;
 		$data['genTypo']= 'oui';
@@ -113,22 +105,22 @@ class ApiSolB2C2 extends baseB2C2{
 		}
 		
 		echo 'Verification terminée';
-		//print_r($res);
+
 		die;
 	}
 	
 	protected function testeTypologieData($data){
 		$res = '';
-		//test
+
 		$projet = $this->genereTypologie($data);
 		foreach ($projet['projet']['lstLot'] as $nomLot=>$aTypeLot){
 			foreach($aTypeLot as $numLot => $typeLot){
-				$idSol = @$typeLot['existant']['idSol'];
+				$idSol = $typeLot['existant']['idSol'] ?? '';
 
 				if (!isset($typeLot['lstSol'][$idSol])){
 					
 					$res.= "$nomLot n°$numLot : Solution n°$idSol n'existe pas<br>";
-					//affiche solution dipo
+					//affiche solution dispo
 					$res.= "Solutions possible : <br>";
 					foreach ($typeLot['lstSol'] as $sol){
 						$res.= '- ';
@@ -207,12 +199,7 @@ class ApiSolB2C2 extends baseB2C2{
 	}
 	
 	protected function getDescription(){
-		//echo '<pre>';print_r($this->jData);die;
-		//$res = [];
-		//if ($jBatiment = @$this->jData['projet']['batiment']){
-		//	$res = $jBatiment;
-		//}
-		//return $res;
+
 		$general = $this->jData['projet']['general'];
 		$batiment = $this->jData['projet']['batiment'];
 		
@@ -233,7 +220,7 @@ class ApiSolB2C2 extends baseB2C2{
 	
 	protected function getParcour(){
 		$res = [];
-		$aDataExistant = @$this->jData['projet']['lstLot'];
+		$aDataExistant = $this->jData['projet']['lstLot'] ?? '';
 		if ($aDataExistant){
 			$nEtap = 1;				
 			$aEtapes = $this->getParcourEtape($aDataExistant);	
@@ -256,13 +243,6 @@ class ApiSolB2C2 extends baseB2C2{
 						$nEtape = 'nonTraite';
 					}
 					
-					
-					/*if (!isset($res[$nEtape])){
-						$res[$nEtape] = ['lstLot'=>[]];
-					}
-					if (!isset($res[$nEtape]['lstLot'][$nomLot])){
-						$res[$nEtape]['lstLot'][$nomLot] = ['type'=>[]];
-					}*/
 					$res[$nEtape]['lstLot'][$nomLot][] = $ligneParcour ;
 				}
 			}
@@ -314,8 +294,7 @@ class ApiSolB2C2 extends baseB2C2{
 				
 				if(strpos($nomChamp,'resRecom')===0){
 					$nomColonne = 'recom';
-					$col = $this->bFdrProprietaire ? 'libMenages' : 'libPro';				
-					$txtVal = $this->getListeValChampCol($nomChamp,$col,$val,'. <br>');
+					$txtVal = $this->getListeValChampCol($nomChamp,'lib',$val,'. <br>');
 				} else {
 					$nomColonne = 'descTrav';
 					$txtVal = $this->getListeValChamp($nomChamp,$val,'. <br>');
@@ -336,9 +315,7 @@ class ApiSolB2C2 extends baseB2C2{
 			if (!isset($typeLotExist[$nomChampPerfFinal]) OR  $typeLotExist[$nomChampPerfFinal] !== 'customVal'){
 				//perf Inconnue
 				$res['perfFinale'] = $this->getPerfMinTxt($nomLot,$solution);
-				//if ($this->conformePerfEnv == PERF_OK){
-				//	$this->conformePerfEnv = PERF_INCONNUE;
-				//}								
+							
 				if ($this->conformePerfEnvPremEtape[$nomLot] == PERF_OK AND $this->travauxEffectues($typeLot,1)){
 						$this->conformePerfEnvPremEtape[$nomLot] = PERF_INCONNUE;
 				}
@@ -346,8 +323,8 @@ class ApiSolB2C2 extends baseB2C2{
 				$res['perfFinale'] = $this->getCustomValTxt($nomChampPerfFinal,$typeLotExist);
 				if (!$this->testePerfFinal($nomLot,$typeLot)){
 					//perf insuffisante
-					$res['perfFinaleErr'] = 'La perfomance est insuffisante  : '.$this->getPerfMinTxt($nomLot,$solution).'';
-					//$this->conformePerfEnv = PERF_INSUFFISANTE;
+					$res['perfFinaleErr'] = 'La performance est insuffisante  : '.$this->getPerfMinTxt($nomLot,$solution).'';
+					
 					if ($this->travauxEffectues($typeLot,1)){
 						$this->conformePerfEnvPremEtape[$nomLot] = PERF_INSUFFISANTE;
 					}
@@ -442,9 +419,9 @@ class ApiSolB2C2 extends baseB2C2{
 		$nbPerfInsuf = 0;
 		$nbEnveloppe = 0;
 		foreach ($aNomLotEnveloppe as $nomLot){
-			//if ($this->lotTravauxEffectuesAEtape($nomLot,1)){
+			
 			$part = $this->getPartLotTraite($nomLot,1);
-			if ($part == 1){
+			if ($part >= 1){
 				$nbEnveloppe++;				
 				if ($this->conformePerfEnvPremEtape[$nomLot] == PERF_OK){
 					$nbPerfOk++;
@@ -454,7 +431,6 @@ class ApiSolB2C2 extends baseB2C2{
 			}
 		}
 
-		//$res['conformeEnvelop'] = ($nbEnveloppe>=2)? self::OK : self::erreur;
 		$res['conforme100pctPosteTravaux'] = ($nbEnveloppe>=2)? self::OK : self::erreur;
 			
 
@@ -467,7 +443,6 @@ class ApiSolB2C2 extends baseB2C2{
 		}
 		
 	
-		//$res['conformeGain40Cep'] = $this->respecteBaisse40pctEtape1(); //remplacé par etiquette C
 
 		$res['conformeEtiquetteC'] = $this->respecteEtiquetteCEtape1()? self::OK : self::erreur;
 		
@@ -479,13 +454,9 @@ class ApiSolB2C2 extends baseB2C2{
 			$res['conformePerfToitTerrasse'] = self::warn2;
 		}
 	
-		//simulrenov.fr
+	
 		//liste critères : https://www.consultations-publiques.developpement-durable.gouv.fr/arrete-relatif-au-contenu-et-aux-conditions-d-a2826.html
 
-
-		//x afficher "le r doit etre > à 3.9...."
-		//x remplacer "bbc par étépes" par "BBC rénovation - 1e étape" pour les recommandations		
-		
 		return $res;
 	}
 	
@@ -495,10 +466,6 @@ class ApiSolB2C2 extends baseB2C2{
 
 	
 	protected function respecteEtiquetteCEtape1(){
-		//$consoInit = $this->calcResult['etape']['0']['consoTotal']['cep'];
-		/*$cepEtape1 = $this->calcResult['etape']['1']['consoTotal']['cep'];
-		$gesEtape1 = $this->calcResult['etape']['1']['consoTotal']['ges'];
-		$etiquette = $this->cth_niveauDpeCepGes($cepEtape1,$gesEtape1);//*/
 		$etiquette = $this->calcResult['etape']['1']['consoTotal']['classeDpe'];
 		return $etiquette <="C"; 
 	}	
@@ -552,10 +519,7 @@ class ApiSolB2C2 extends baseB2C2{
 	
 	protected function respecteEtiquetteAouBDernEtape(){
 		$nbEtap = $this->getMaxEtape();
-		//$consoInit = $this->calcResult['etape']['0']['consoTotal']['cep'];
-		/*$cepEtape1 = $this->calcResult['etape'][$nbEtap]['consoTotal']['cep'];
-		$gesEtape1 = $this->calcResult['etape'][$nbEtap]['consoTotal']['ges'];
-		$etiquette = $this->cth_niveauDpeCepGes($cepEtape1,$gesEtape1);//*/
+		
 		$etiquette = $this->calcResult['etape'][$nbEtap]['consoTotal']['classeDpe'];
 		return $etiquette <="B"; 
 	}
@@ -563,8 +527,8 @@ class ApiSolB2C2 extends baseB2C2{
 	protected function respecteUbatDernEtape(){
 		$nbEtap = $this->getMaxEtape();
 		
-		$ubat = @$this->calcResult['etape'][$nbEtap]['ubat']['ubat'];
-		$ubatBase = @$this->calcResult['etape'][$nbEtap]['ubat']['ubatBase'];
+		$ubat = $this->calcResult['etape'][$nbEtap]['ubat']['ubat'] ?? '';
+		$ubatBase = $this->calcResult['etape'][$nbEtap]['ubat']['ubatBase'] ?? '';
 		
 		if ($ubat AND $ubatBase){
 			if (floatval($ubat) <= floatval($ubatBase)){
@@ -584,7 +548,6 @@ class ApiSolB2C2 extends baseB2C2{
 		$res['protectionSolaireDernEtape'] = self::warn2;		
 		
 		if ($this->lotTravauxEffectuesApresEtape('chauffage',1)){
-			//si chauffage traité après l'étape 1 
 			$res['chauffageAutreEtape'] = self::warn2;
 		}
 		
@@ -661,7 +624,6 @@ class ApiSolB2C2 extends baseB2C2{
 					
 		}	
 
-		//echo json_encode($this->jFdr['parcour']['etapes']);die;
 	}
 	
 	protected function calcInteractionEtapeLot($nEtap,$aNomLot){
@@ -684,18 +646,10 @@ class ApiSolB2C2 extends baseB2C2{
 				//ajout des champs manquant pour faire les tests
 				$dataEntree = $this->ajouteChampManquantEntree($nomFichier,$dataEntree);
 
-				
-				//print_r($dataEntree);die;
 				$aInteraction = $this->chercheValeurTableau($nomFichier,$dataEntree,false,false);
 
 				//on sépare les intéragtion inter étapes et globales
-				foreach($aInteraction as $id =>$lgnInter){
-					
-					if ($this->bFdrProprietaire && isset($lgnInter['solutionMenages'])){
-						$lgnInter['solution'] = $lgnInter['solutionMenages'];
-					}					
-					unset($lgnInter['solutionMenages']);
-					
+				foreach($aInteraction as $id =>$lgnInter){					
 					if(empty($lgnInter['niveau'])){
 						$aInteracEtape[$id] = $lgnInter;
 					} else {
@@ -716,11 +670,6 @@ class ApiSolB2C2 extends baseB2C2{
 			$this->jFdr['parcour']['etapes'][$nEtap]['lstInteracGlob'][$libInteraction] = array_values($aInteracGlob);
 		}
 		
-		
-		
-		//echo json_encode($aDataEntree);
-		//echo json_encode($aInteracGlob+$aInteraction);
-		//die;	
 		
 	}
 	
@@ -761,8 +710,8 @@ class ApiSolB2C2 extends baseB2C2{
 			$aNomLot[1] = $aNomLot[0];
 		}
 		
-		$aTypeLot0 = @$this->jData['projet']['lstLot'][$aNomLot[0]];
-		$aTypeLot1 = @$this->jData['projet']['lstLot'][$aNomLot[1]];
+		$aTypeLot0 = $this->jData['projet']['lstLot'][$aNomLot[0]] ?? '';
+		$aTypeLot1 = $this->jData['projet']['lstLot'][$aNomLot[1]] ?? '';
 		
 		foreach ($aTypeLot0 as $typeLot0){
 			foreach ($aTypeLot1 as $typeLot1){
@@ -793,7 +742,6 @@ class ApiSolB2C2 extends baseB2C2{
 		if (!$this->isTypeLotEtapeSupprime($typeLot,$nEtap)){
 
 			$dataTypeLot = $this->getTypeLotSolutionEtExistant($typeLot);
-			//$dataTypeLot['designLot'.ucfirst($nomLot)]  = $dataTypeLot['designLot'] ;   //pour débugger
 
 			if ($this->travauxEffectuesPlusTard($typeLot,$nEtap)){	
 				//si travaux effectues plus tard, alors on renomme les clés en les préfixan par plus tard
@@ -803,7 +751,7 @@ class ApiSolB2C2 extends baseB2C2{
 				}
 				
 				$dataTypeLot['lotTraiteApres'] = [$nomLot];// le lot sera traité à étape ultérieure				
-				//print_r($dataTypeLot);die;
+				
 			}
 			
 			
@@ -875,7 +823,7 @@ class ApiSolB2C2 extends baseB2C2{
 		if ($this->travauxEffectues($typeLot,$etape)){
 			return !$this->isTypeLotElementSupprime($typeLot);
 		} else {
-			return $this->isTypeLotElementExisteEtatInitial($typeLot);//empty($typeLot['existant']['inexistant']);
+			return $this->isTypeLotElementExisteEtatInitial($typeLot);
 		}			
 	}
 	
@@ -924,10 +872,12 @@ if (!is_array($aValue)){
 	
 	protected function getMaxEtape(){
 		$maxEtape = 0;
-		$aLstLot = @$this->jData['projet']['lstLot'];
+		$aLstLot = $this->jData['projet']['lstLot'] ?? '';
 		foreach ($aLstLot as $aTypeLot){
-			foreach ($aTypeLot as $lot){
-				$maxEtape = max($maxEtape, $lot['existant']['etape']);
+			foreach ($aTypeLot as $typeLot){
+				if (!$this->isTypeLotNonTraite($typeLot)){
+					$maxEtape = max($maxEtape, $typeLot['existant']['etape']);
+				}
 			}
 		}
 		return $maxEtape;
@@ -943,16 +893,19 @@ if (!is_array($aValue)){
 				$partLot = $typeLot['existant']['surfMenuiserie'];
 			} else {
 				$partLot = $typeLot['existant']['part'];
-			}				
-			if ( !$this->isTypeLotNonPrioritaire($typeLot) ){ 
+			}
+			// Après discution avec Angélique : une surface est considérée comme traitée même si elle était déjà isolée. et il faut que 100% du lot soit traité, même les surfaces déjà isolées.
+			//if ( !$this->isTypeLotNonPrioritaire($typeLot)  // dans les cas où on doit isoler tous les murs sauf un mur qui était déjà suffisamment isolé.			
+			//	OR 
+			//	$this->travauxEffectues($typeLot,$etape) // dans les cas où on a isolé la toiture, alors qu'elle étai déjà suffisamment isolée
+			//){			
 				if ($this->isTypeLotElementExisteEtape($typeLot,$etape)){
-					$totalPart+=$partLot;
-					
+					$totalPart+=$partLot;					
 					if ($this->travauxEffectues($typeLot,$etape)){
 						$totalPartTraite+=$partLot;			
 					}	
 				}	
-			}
+			//}
 		}
 		
 		if ($totalPart>0){
